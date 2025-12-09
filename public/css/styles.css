@@ -335,6 +335,42 @@ body {
   margin-right: var(--spacing-xs);
 }
 
+/* Gender Filter */
+.gender-filter {
+  display: flex;
+  gap: var(--spacing-xs);
+  justify-content: center;
+  margin: var(--spacing-md) 0;
+  padding: var(--spacing-sm);
+  background: var(--bg-secondary);
+  border-radius: var(--radius);
+}
+
+.gender-btn {
+  padding: var(--spacing-xs) var(--spacing-md);
+  border: 2px solid var(--border-color);
+  background: white;
+  color: var(--text-secondary);
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  border-radius: var(--radius);
+  transition: all var(--transition);
+  font-family: inherit;
+}
+
+.gender-btn:hover {
+  border-color: var(--usa-blue);
+  color: var(--usa-blue);
+  background: #f0f5ff;
+}
+
+.gender-btn.active {
+  background: var(--usa-blue);
+  color: white;
+  border-color: var(--usa-blue);
+}
+
 /* Standings Table */
 .standings-table {
   width: 100%;
@@ -348,6 +384,15 @@ body {
 
 .standings-table thead {
   background: var(--usa-blue);
+}
+
+/* Women's Section Styling */
+.women-section h4 {
+  color: #e83e8c;
+}
+
+.women-section .standings-table thead {
+  background: #e83e8c;
 }
 
 .standings-table th {

@@ -8,7 +8,8 @@ let appState = {
     allStandings: null,
     combinations: null,
     currentCategory: 'overall', // overall, junior, master
-    currentReport: 'sprint' // sprint, long-distance, 500m, 1000m, etc.
+    currentReport: 'sprint', // sprint, long-distance, 500m, 1000m, etc.
+    currentGender: 'all' // all, men, women
 };
 
 // API Base URL
@@ -316,8 +317,34 @@ function showReport(reportType) {
     });
     event.target.classList.add('active');
 
+    // Hide Junior/Master tabs for Sprint and Long Distance (they're overall-only)
+    const categoryTabs = document.querySelector('.category-tabs');
+    if (reportType === 'sprint' || reportType === 'long-distance') {
+        categoryTabs.style.display = 'none';
+        // Force to overall category for these views
+        appState.currentCategory = 'overall';
+    } else {
+        categoryTabs.style.display = 'flex';
+    }
+
     renderStandings();
 }
+
+/**
+ * Filter by gender (All, Men, Women)
+ */
+function filterGender(gender) {
+    appState.currentGender = gender;
+
+    // Update active button
+    document.querySelectorAll('.gender-btn').forEach(btn => {
+        btn.classList.remove('active');
+    });
+    event.target.classList.add('active');
+
+    renderStandings();
+}
+
 
 /**
  * Render standings based on current selection
@@ -361,20 +388,30 @@ function renderCombinationStandings(type, category) {
 
     let html = `<h3 class="section-title">${title} - ${capitalizeFirst(category)}</h3>`;
 
+    const gender = appState.currentGender;
+
     // Men's standings
-    if (data.men && data.men.length > 0) {
+    if ((gender === 'all' || gender === 'men') && data.men && data.men.length > 0) {
+        html += `<div class="men-section">`;
         html += `<h4 class="mt-lg mb-lg">👨 Men</h4>`;
         html += renderStandingsTable(data.men, true);
+        html += `</div>`;
     }
 
     // Women's standings
-    if (data.women && data.women.length > 0) {
+    if ((gender === 'all' || gender === 'women') && data.women && data.women.length > 0) {
+        html += `<div class="women-section">`;
         html += `<h4 class="mt-lg mb-lg">👩 Women</h4>`;
         html += renderStandingsTable(data.women, true);
+        html += `</div>`;
     }
 
-    if (data.men.length === 0 && data.women.length === 0) {
-        html += '<p class="text-center text-muted">No data available for this category</p>';
+    const showingData = (gender === 'all' && (data.men.length > 0 || data.women.length > 0)) ||
+        (gender === 'men' && data.men.length > 0) ||
+        (gender === 'women' && data.women.length > 0);
+
+    if (!showingData) {
+        html += '<p class="text-center text-muted">No data available for this selection</p>';
     }
 
     return html;
@@ -411,18 +448,28 @@ function renderIndividualDistance(distance, category) {
 
     let html = `<h3 class="section-title">${distance} - ${capitalizeFirst(category)}</h3>`;
 
-    if (men.length > 0) {
+    const gender = appState.currentGender;
+
+    if ((gender === 'all' || gender === 'men') && men.length > 0) {
+        html += `<div class="men-section">`;
         html += `<h4 class="mt-lg mb-lg">👨 Men</h4>`;
         html += renderStandingsTable(men, true);
+        html += `</div>`;
     }
 
-    if (women.length > 0) {
+    if ((gender === 'all' || gender === 'women') && women.length > 0) {
+        html += `<div class="women-section">`;
         html += `<h4 class="mt-lg mb-lg">👩 Women</h4>`;
         html += renderStandingsTable(women, true);
+        html += `</div>`;
     }
 
-    if (men.length === 0 && women.length === 0) {
-        html += '<p class="text-center text-muted">No data available for this distance</p>';
+    const showingData = (gender === 'all' && (men.length > 0 || women.length > 0)) ||
+        (gender === 'men' && men.length > 0) ||
+        (gender === 'women' && women.length > 0);
+
+    if (!showingData) {
+        html += '<p class="text-center text-muted">No data available for this selection</p>';
     }
 
     return html;
@@ -587,7 +634,8 @@ function clearAllData() {
         allStandings: null,
         combinations: null,
         currentCategory: 'overall',
-        currentReport: 'sprint'
+        currentReport: 'sprint',
+        currentGender: 'all'
     };
 
     // Clear input fields
