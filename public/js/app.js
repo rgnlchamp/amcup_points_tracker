@@ -138,9 +138,10 @@ async function calculateStandings() {
         showStatus('success', '🎉 Season standings calculated successfully!');
 
         // Scroll to standings
-        document.getElementById('standings-section').scrollIntoView({
-            behavior: 'smooth',
-            block: 'start'
+        // Scroll to top to ensure header/tabs are visible
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
         });
 
     } catch (error) {
@@ -317,15 +318,9 @@ function showReport(reportType) {
     });
     event.target.classList.add('active');
 
-    // Hide Junior/Master tabs for Sprint and Long Distance (they're overall-only)
+    // Ensure category tabs are visible
     const categoryTabs = document.querySelector('.category-tabs');
-    if (reportType === 'sprint' || reportType === 'long-distance') {
-        categoryTabs.style.display = 'none';
-        // Force to overall category for these views
-        appState.currentCategory = 'overall';
-    } else {
-        categoryTabs.style.display = 'flex';
-    }
+    if (categoryTabs) categoryTabs.style.display = 'flex';
 
     renderStandings();
 }
