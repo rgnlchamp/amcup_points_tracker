@@ -685,6 +685,15 @@ document.addEventListener('DOMContentLoaded', () => {
  * @param {string} mode - 'viewer' or 'admin'
  */
 function enterApp(mode) {
+    // Password check for admin
+    if (mode === 'admin') {
+        const password = prompt('Please enter the admin password:');
+        if (password !== 'speed') {
+            alert('❌ Incorrect password');
+            return;
+        }
+    }
+
     const landingScreen = document.getElementById('landing-screen');
     const appContent = document.getElementById('app-content');
 
