@@ -414,7 +414,7 @@ app.post('/api/generate-pdf', async (req, res) => {
                     });
 
                     colMap.forEach((val, key) => {
-                        headers.push(`${val.dist}\n${val.eventName.replace('AmCup ', '#')}`);
+                        headers.push(`${val.dist}\n${val.eventName.replace('AmCup ', '#').replace('##', '#')}`);
                         valueExtractors.push(s => (s.details[val.dist] && s.details[val.dist][val.eventName]) || '-');
                     });
 
@@ -428,7 +428,7 @@ app.post('/api/generate-pdf', async (req, res) => {
                     });
 
                     Array.from(events).forEach(eventName => {
-                        headers.push(eventName.replace('AmCup ', '#'));
+                        headers.push(eventName.replace('AmCup ', '#').replace('##', '#'));
                         valueExtractors.push(s => (s.distances[detailedInfo.key] && s.distances[detailedInfo.key][eventName]) || '-');
                     });
                 }
