@@ -143,13 +143,25 @@
 
       <!-- Export Actions -->
       <div class="export-actions">
-        <button class="export-btn pdf-btn" onclick="generatePDF()">
-          <span class="btn-icon">📄</span>
-          Generate Official PDF Report
-        </button>
+        <div class="export-group">
+          <select id="export-type" class="export-select">
+            <option value="full">📜 Full Season Report (Everything)</option>
+            <option value="overall">🏆 Overall Standings Only</option>
+            <option value="sprint">⚡ Sprint Standings Only</option>
+            <option value="long-distance">🏃 Long Distance Only</option>
+            <option value="junior">🌟 Juniors Only</option>
+            <option value="master">👑 Masters Only</option>
+          </select>
+          <button class="export-btn pdf-btn" onclick="generatePDF()">
+            <span class="btn-icon">📄</span>
+            Download PDF
+          </button>
+        </div>
+
         <button class="export-btn excel-btn" onclick="generateExcel()">
           <span class="btn-icon">📊</span>
           Export to Excel
+
         </button>
       </div>
     </section>

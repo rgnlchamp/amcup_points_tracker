@@ -447,11 +447,34 @@ body {
 }
 
 /* Export Actions */
+/* Export Actions */
 .export-actions {
   display: flex;
+  justify-content: center;
   gap: var(--spacing-md);
-  margin-top: var(--spacing-lg);
+  margin-top: var(--spacing-xl);
   flex-wrap: wrap;
+}
+
+.export-group {
+  display: flex;
+  gap: var(--spacing-xs);
+}
+
+.export-select {
+  padding: var(--spacing-sm) var(--spacing-md);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  font-family: inherit;
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  background-color: white;
+  cursor: pointer;
+}
+
+.export-select:focus {
+  outline: none;
+  border-color: var(--usa-blue);
 }
 
 .export-btn {

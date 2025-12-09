@@ -313,15 +313,209 @@ app.post('/api/scrape-event', async (req, res) => {
     }
 });
 
+// Helper to draw a table in PDF
+function drawTable(doc, title, headers, rows, options = {}) {
+    const startX = 50;
+    let currentY = doc.y;
+    const colWidth = (options.width || 500) / headers.length;
+
+    // Check for page break
+    if (currentY + 100 > doc.page.height - 50) {
+        doc.addPage();
+        currentY = 50;
+    }
+
+    // Title
+    doc.fontSize(16).fillColor(options.titleColor || 'black').text(title, startX, currentY);
+    currentY += 30;
+
+    // Header
+    doc.rect(startX, currentY, options.width || 500, 20).fill(options.headerColor || '#003087');
+    doc.fillColor('white').fontSize(10);
+
+    headers.forEach((header, i) => {
+        doc.text(header, startX + (i * colWidth) + 5, currentY + 5, { width: colWidth - 10, align: 'left' });
+    });
+
+    currentY += 20;
+
+    // Rows
+    doc.fillColor('black');
+    rows.forEach((row, rowIndex) => {
+        // Check for page break inside table
+        if (currentY + 20 > doc.page.height - 50) {
+            doc.addPage();
+            currentY = 50;
+            // Redraw header
+            doc.rect(startX, currentY, options.width || 500, 20).fill(options.headerColor || '#003087');
+            doc.fillColor('white');
+            headers.forEach((header, i) => {
+                doc.text(header, startX + (i * colWidth) + 5, currentY + 5, { width: colWidth - 10, align: 'left' });
+            });
+            currentY += 20;
+            doc.fillColor('black');
+        }
+
+        // Stripe row
+        if (rowIndex % 2 === 1) {
+            doc.rect(startX, currentY, options.width || 500, 20).fill('#f5f5f5');
+            doc.fillColor('black'); // Reset fill after stripe
+        }
+
+        row.forEach((cell, i) => {
+            doc.text(cell.toString(), startX + (i * colWidth) + 5, currentY + 5, { width: colWidth - 10, align: 'left' });
+        });
+        currentY += 20;
+    });
+
+    doc.moveDown(2);
+}
+
 app.post('/api/generate-pdf', async (req, res) => {
     try {
+        const { standings, combinations, exportOptions } = req.body;
         const doc = new PDFDocument({ margin: 50, size: 'LETTER' });
+
         res.setHeader('Content-Type', 'application/pdf');
         res.setHeader('Content-Disposition', 'attachment; filename=amcup-standings.pdf');
         doc.pipe(res);
-        doc.fontSize(24).text('US Speedskating AmCup', { align: 'center' });
+
+        // Title Page
+        doc.fontSize(24).fillColor('#003087').text('US Speedskating AmCup', { align: 'center' });
         doc.fontSize(20).text('2025-2026 Season Standings', { align: 'center' });
         doc.moveDown(2);
+
+        const type = exportOptions.type || 'full';
+
+        const generateSection = (title, data, isWomen = false, detailedInfo = null) => {
+            if (!data || data.length === 0) return;
+
+            let headers = ['Rank', 'Name', 'Cat'];
+            let valueExtractors = [];
+
+            // Determine dynamic columns based on detailedInfo
+            if (detailedInfo) {
+                if (detailedInfo.type === 'combination') {
+                    // Flatten details: 500m AmCup1, 500m AmCup2, etc.
+                    const colMap = new Map(); // key: "500m-AmCup1", label: "500m\nAmCup1"
+
+                    // Scan all data to find all possible columns
+                    data.forEach(skater => {
+                        if (skater.details) {
+                            Object.keys(skater.details).forEach(dist => {
+                                Object.keys(skater.details[dist]).forEach(eventName => {
+                                    const key = `${dist}-${eventName}`;
+                                    if (!colMap.has(key)) {
+                                        colMap.set(key, { dist, eventName });
+                                    }
+                                });
+                            });
+                        }
+                    });
+
+                    colMap.forEach((val, key) => {
+                        headers.push(`${val.dist}\n${val.eventName.replace('AmCup ', '#')}`);
+                        valueExtractors.push(s => (s.details[val.dist] && s.details[val.dist][val.eventName]) || '-');
+                    });
+
+                } else if (detailedInfo.type === 'distance') {
+                    // Individual distance columns
+                    const events = new Set();
+                    data.forEach(skater => {
+                        if (skater.distances && skater.distances[detailedInfo.key]) {
+                            Object.keys(skater.distances[detailedInfo.key]).forEach(e => events.add(e));
+                        }
+                    });
+
+                    Array.from(events).forEach(eventName => {
+                        headers.push(eventName.replace('AmCup ', '#'));
+                        valueExtractors.push(s => (s.distances[detailedInfo.key] && s.distances[detailedInfo.key][eventName]) || '-');
+                    });
+                }
+            }
+
+            headers.push('Total');
+
+            const rows = data.map((skater, index) => {
+                const row = [
+                    index + 1,
+                    skater.name,
+                    skater.category.replace('Master', 'M').replace('Junior', 'J')
+                ];
+
+                valueExtractors.forEach(fn => row.push(fn(skater)));
+
+                row.push(skater.points);
+                return row;
+            });
+
+            const color = isWomen ? '#e83e8c' : '#003087';
+            drawTable(doc, title, headers, rows, { headerColor: color, titleColor: color });
+        };
+
+        const processCategory = (catName, catKey) => {
+            // Sprint
+            if (type === 'full' || type === 'sprint' || type === 'overall') {
+                const sprint = combinations[catKey].sprint;
+                if (!catKey.includes('over') && (type === 'overall')) return;
+
+                if (sprint.men && sprint.men.length > 0)
+                    generateSection(`${catName} - Sprint (Men)`, sprint.men, false, { type: 'combination' });
+                if (sprint.women && sprint.women.length > 0)
+                    generateSection(`${catName} - Sprint (Women)`, sprint.women, true, { type: 'combination' });
+            }
+
+            // Long Distance
+            if (type === 'full' || type === 'long-distance' || type === 'overall') {
+                const ld = combinations[catKey].longDistance;
+                if (!catKey.includes('over') && (type === 'overall')) return;
+
+                if (ld.men && ld.men.length > 0)
+                    generateSection(`${catName} - Long Distance (Men)`, ld.men, false, { type: 'combination' });
+                if (ld.women && ld.women.length > 0)
+                    generateSection(`${catName} - Long Distance (Women)`, ld.women, true, { type: 'combination' });
+            }
+
+            // Distances
+            if (type === 'full' || (!['sprint', 'long-distance', 'overall'].includes(type))) {
+                const distances = ['500m', '1000m', '1500m', '3000m', '5000m', 'Mass Start'];
+                const catData = standings[catKey];
+
+                distances.forEach(dist => {
+                    const skaters = [];
+                    Object.values(catData).forEach(skater => {
+                        if (skater.distances[dist]) {
+                            const points = sumPoints(skater.distances[dist]);
+                            if (points > 0) skaters.push({ ...skater, points });
+                        }
+                    });
+
+                    skaters.sort((a, b) => b.points - a.points);
+
+                    const men = skaters.filter(s => s.category.startsWith('M'));
+                    const women = skaters.filter(s => !s.category.startsWith('M'));
+
+                    if (men.length > 0)
+                        generateSection(`${catName} - ${dist} (Men)`, men, false, { type: 'distance', key: dist });
+                    if (women.length > 0)
+                        generateSection(`${catName} - ${dist} (Women)`, women, true, { type: 'distance', key: dist });
+                });
+            }
+        };
+
+        // Execution based on selection
+        if (type === 'full' || type === 'overall' || type === 'sprint' || type === 'long-distance') {
+            processCategory('Overall', 'overall');
+        }
+
+        if (type === 'full' || type === 'junior') {
+            processCategory('Junior', 'junior');
+        }
+
+        if (type === 'full' || type === 'master') {
+            processCategory('Master', 'master');
+        }
+
         doc.end();
     } catch (error) {
         console.error('Error generating PDF:', error);

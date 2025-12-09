@@ -534,6 +534,7 @@ async function generatePDF() {
         return;
     }
 
+    const exportType = document.getElementById('export-type').value;
     showLoading(true);
 
     try {
@@ -544,7 +545,12 @@ async function generatePDF() {
             },
             body: JSON.stringify({
                 standings: appState.allStandings,
-                combinations: appState.combinations
+                combinations: appState.combinations,
+                exportOptions: {
+                    type: exportType,
+                    // Pass current names for filenames if needed
+                    eventName: 'AmCup-Season-Standings'
+                }
             })
         });
 
