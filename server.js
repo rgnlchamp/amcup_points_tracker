@@ -450,7 +450,7 @@ app.post('/api/generate-pdf', async (req, res) => {
             });
 
             const color = isWomen ? '#e83e8c' : '#003087';
-            drawTable(doc, title, headers, rows, { headerColor: color, titleColor: color });
+            drawSmartTable(doc, title, headers, rows, { headerColor: color, titleColor: color });
         };
 
         const processCategory = (catName, catKey) => {
@@ -540,3 +540,84 @@ app.post('/api/generate-excel', async (req, res) => {
 app.listen(PORT, () => {
     console.log(`🚀 AmCup Points Tracker running on http://localhost:${PORT}`);
 });
+
+// Smart table drawing with calculated widths
+function drawSmartTable(doc, title, headers, rows, options = {}) {
+    const startX = 50;
+    const tableWidth = options.width || 500;
+    let currentY = doc.y;
+
+    // Calculate column widths
+    const colWidths = headers.map((header, i) => {
+        if (header === 'Rank') return 40;
+        if (header === 'Name') return 160;
+        if (header === 'Cat' || header === 'Category') return 60;
+        if (header === 'Total' || header === 'Points') return 50;
+        return 0; // Dynamic columns
+    });
+
+    const usedWidth = colWidths.reduce((a, b) => a + b, 0);
+    const dynamicCols = colWidths.filter(w => w === 0).length;
+    const remainingWidth = tableWidth - usedWidth;
+    const dynamicWidth = dynamicCols > 0 ? remainingWidth / dynamicCols : 0;
+
+    // Fill in dynamic widths
+    const finalColWidths = colWidths.map(w => w === 0 ? dynamicWidth : w);
+
+    // Calculate x positions
+    const colXPoints = [startX];
+    for (let i = 0; i < finalColWidths.length; i++) {
+        colXPoints.push(colXPoints[i] + finalColWidths[i]);
+    }
+
+    // Check for page break
+    if (currentY + 100 > doc.page.height - 50) {
+        doc.addPage();
+        currentY = 50;
+    }
+
+    // Title
+    doc.fontSize(16).fillColor(options.titleColor || 'black').text(title, startX, currentY);
+    currentY += 30;
+
+    // Header
+    doc.rect(startX, currentY, tableWidth, 25).fill(options.headerColor || '#003087');
+    doc.fillColor('white').fontSize(9);
+
+    headers.forEach((header, i) => {
+        doc.text(header, colXPoints[i] + 2, currentY + 5, { width: finalColWidths[i] - 4, align: 'left' });
+    });
+
+    currentY += 25;
+
+    // Rows
+    doc.fillColor('black').fontSize(10);
+    rows.forEach((row, rowIndex) => {
+        // Check for page break inside table
+        if (currentY + 20 > doc.page.height - 50) {
+            doc.addPage();
+            currentY = 50;
+            // Redraw header
+            doc.rect(startX, currentY, tableWidth, 25).fill(options.headerColor || '#003087');
+            doc.fillColor('white').fontSize(9);
+            headers.forEach((header, i) => {
+                doc.text(header, colXPoints[i] + 2, currentY + 5, { width: finalColWidths[i] - 4, align: 'left' });
+            });
+            currentY += 25;
+            doc.fillColor('black').fontSize(10);
+        }
+
+        // Stripe row
+        if (rowIndex % 2 === 1) {
+            doc.rect(startX, currentY, tableWidth, 20).fill('#f5f5f5');
+            doc.fillColor('black'); // Reset fill after stripe
+        }
+
+        row.forEach((cell, i) => {
+            doc.text(cell.toString(), colXPoints[i] + 2, currentY + 5, { width: finalColWidths[i] - 4, align: 'left', height: 15, ellipsis: true });
+        });
+        currentY += 20;
+    });
+
+    doc.moveDown(2);
+}
