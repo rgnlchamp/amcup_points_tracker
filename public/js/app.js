@@ -577,51 +577,7 @@ async function generatePDF() {
     }
 }
 
-/**
- * Generate Excel Export
- */
-async function generateExcel() {
-    if (!appState.allStandings) {
-        showStatus('error', 'Please calculate standings first');
-        return;
-    }
 
-    showLoading(true);
-
-    try {
-        const response = await fetch(`${API_URL}/api/generate-excel`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                standings: appState.allStandings,
-                combinations: appState.combinations
-            })
-        });
-
-        if (!response.ok) {
-            throw new Error('Failed to generate Excel file');
-        }
-
-        const blob = await response.blob();
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `AmCup-Standings-${new Date().toISOString().split('T')[0]}.xlsx`;
-        document.body.appendChild(a);
-        a.click();
-        window.URL.revokeObjectURL(url);
-        document.body.removeChild(a);
-
-        showStatus('success', '✅ Excel file generated successfully');
-    } catch (error) {
-        console.error('Error generating Excel:', error);
-        showStatus('error', `❌ Error generating Excel: ${error.message}`);
-    } finally {
-        showLoading(false);
-    }
-}
 
 /**
  * Clear all data and reset application
