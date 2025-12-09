@@ -578,6 +578,29 @@ async function generatePDF() {
 }
 
 
+/**
+ * Publish data to server for static deployment
+ */
+async function publishData() {
+    if (!confirm('This will save current data to the server for Vercel deployment. Continue?')) return;
+
+    showLoading(true);
+    try {
+        const response = await fetch(`${API_URL}/api/publish`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ events: appState.events })
+        });
+
+        if (!response.ok) throw new Error('Failed to publish');
+
+        showStatus('success', '✅ Data published! You can now commit and push to Vercel.');
+    } catch (e) {
+        showStatus('error', '❌ Publish failed: ' + e.message);
+    } finally {
+        showLoading(false);
+    }
+}
 
 /**
  * Clear all data and reset application
@@ -652,6 +675,40 @@ function capitalizeFirst(str) {
 }
 
 // Initialize on load
+// Initialize on load
 document.addEventListener('DOMContentLoaded', () => {
     console.log('🎯 AmCup Points Tracker initialized');
+
+    // check for admin mode
+    if (window.location.hostname === 'localhost' || new URLSearchParams(window.location.search).has('admin')) {
+        const publishBtn = document.getElementById('publish-btn');
+        if (publishBtn) publishBtn.style.display = 'inline-flex';
+    }
+
+    checkForPublishedData();
 });
+
+async function checkForPublishedData() {
+    try {
+        const response = await fetch('season_data.json');
+        if (response.ok) {
+            const data = await response.json();
+            appState.events = data;
+
+            const isAdmin = window.location.hostname === 'localhost' || new URLSearchParams(window.location.search).has('admin');
+
+            if (!isAdmin) {
+                const inputSection = document.getElementById('input-section');
+                if (inputSection) inputSection.style.display = 'none';
+                calculateStandings();
+            } else {
+                showStatus('info', '🔧 Admin Mode: Published data loaded');
+                // For admin, we might want to populate inputs? Or just rely on appState?
+                // calculateStandings relies on appState.
+                if (Object.values(data).some(e => e)) calculateStandings();
+            }
+        }
+    } catch (e) {
+        console.log('No published data found');
+    }
+}

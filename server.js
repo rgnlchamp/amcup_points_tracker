@@ -537,6 +537,22 @@ app.post('/api/generate-excel', async (req, res) => {
     }
 });
 
+// Publish endpoint to save data for static deployment
+app.post('/api/publish', async (req, res) => {
+    try {
+        const { events } = req.body;
+        const filePath = path.join(__dirname, 'public', 'season_data.json');
+
+        fs.writeFileSync(filePath, JSON.stringify(events, null, 2));
+
+        console.log('Season data published to public/season_data.json');
+        res.json({ success: true, message: 'Data published successfully' });
+    } catch (error) {
+        console.error('Error publishing data:', error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
 app.listen(PORT, () => {
     console.log(`🚀 AmCup Points Tracker running on http://localhost:${PORT}`);
 });
