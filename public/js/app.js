@@ -681,6 +681,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // check for admin mode
     if (window.location.hostname === 'localhost' || new URLSearchParams(window.location.search).has('admin')) {
+        document.body.classList.add('admin-mode');
         const publishBtn = document.getElementById('publish-btn');
         if (publishBtn) publishBtn.style.display = 'inline-flex';
     }
