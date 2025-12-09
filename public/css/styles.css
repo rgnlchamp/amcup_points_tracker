@@ -636,3 +636,101 @@ body {
 body.admin-mode #input-section {
     display: block;
 }
+
+/* Landing Screen Styles */
+.landing-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: linear-gradient(135deg, #003087 0%, #001e54 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.landing-card {
+    background: white;
+    padding: 3rem;
+    border-radius: 16px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+    text-align: center;
+    max-width: 500px;
+    width: 90%;
+}
+
+.landing-logo {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+}
+
+.landing-title {
+    color: #003087;
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+}
+
+.landing-subtitle {
+    color: #666;
+    font-size: 1.1rem;
+    margin-bottom: 2.5rem;
+}
+
+.landing-options {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.landing-btn {
+    display: flex;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    border: 2px solid #e0e0e0;
+    border-radius: 12px;
+    background: white;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: left;
+}
+
+.landing-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    border-color: #003087;
+}
+
+.landing-btn .icon {
+    font-size: 2rem;
+    margin-right: 1.5rem;
+}
+
+.landing-btn .text {
+    display: block;
+    font-size: 1.2rem;
+    color: #333;
+    font-weight: 600;
+}
+
+.landing-btn .subtext {
+    display: block;
+    font-size: 0.9rem;
+    color: #888;
+    margin-top: 0.2rem;
+}
+
+.landing-btn.admin-btn:hover {
+    background-color: #f8f9fa;
+}
+
+.landing-btn.viewer-btn {
+    background-color: #f0f7ff;
+    border-color: #003087;
+}
+
+.landing-btn.viewer-btn:hover {
+    background-color: #e6f0ff;
+}

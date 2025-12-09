@@ -675,19 +675,38 @@ function capitalizeFirst(str) {
 }
 
 // Initialize on load
-// Initialize on load
 document.addEventListener('DOMContentLoaded', () => {
     console.log('🎯 AmCup Points Tracker initialized');
+    // App waits for user selection on landing screen
+});
 
-    // check for admin mode
-    if (window.location.hostname === 'localhost' || new URLSearchParams(window.location.search).has('admin')) {
+/**
+ * Handle entry into the application
+ * @param {string} mode - 'viewer' or 'admin'
+ */
+function enterApp(mode) {
+    const landingScreen = document.getElementById('landing-screen');
+    const appContent = document.getElementById('app-content');
+
+    // Hide landing, show app
+    if (landingScreen) landingScreen.style.display = 'none';
+    if (appContent) appContent.style.display = 'block';
+
+    // Config mode
+    if (mode === 'admin') {
         document.body.classList.add('admin-mode');
+        // Show publish button for admin
         const publishBtn = document.getElementById('publish-btn');
         if (publishBtn) publishBtn.style.display = 'inline-flex';
+
+        showStatus('info', '🔧 Admin Mode: Full Access');
+    } else {
+        document.body.classList.remove('admin-mode');
     }
 
+    // Load data (always try to load pub data if exists)
     checkForPublishedData();
-});
+}
 
 async function checkForPublishedData() {
     try {
@@ -696,20 +715,14 @@ async function checkForPublishedData() {
             const data = await response.json();
             appState.events = data;
 
-            const isAdmin = window.location.hostname === 'localhost' || new URLSearchParams(window.location.search).has('admin');
-
-            if (!isAdmin) {
-                const inputSection = document.getElementById('input-section');
-                if (inputSection) inputSection.style.display = 'none';
+            // Load standings if data exists
+            if (Object.values(data).some(e => e)) {
                 calculateStandings();
-            } else {
-                showStatus('info', '🔧 Admin Mode: Published data loaded');
-                // For admin, we might want to populate inputs? Or just rely on appState?
-                // calculateStandings relies on appState.
-                if (Object.values(data).some(e => e)) calculateStandings();
+                showStatus('info', 'Loaded published season data');
             }
         }
     } catch (e) {
         console.log('No published data found');
     }
 }
+

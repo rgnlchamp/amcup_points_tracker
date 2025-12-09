@@ -16,166 +16,192 @@
 </head>
 
 <body>
-  <!-- Header -->
-  <header class="app-header">
-    <div class="header-content">
-      <div class="header-left">
-        <div class="logo-section">
-          <div>
-            <h1 class="app-title">US Speedskating AmCup</h1>
-            <p class="app-subtitle">2025-2026 Points Tracker</p>
-          </div>
-        </div>
-      </div>
-      <div class="header-right">
-        <div class="season-badge">Season 2025-26</div>
+  <div id="landing-screen" class="landing-screen">
+    <div class="landing-card">
+      <div class="landing-logo">🇺🇸</div>
+      <h1 class="landing-title">AmCup Points Tracker</h1>
+      <p class="landing-subtitle">2025-2026 Season</p>
+
+      <div class="landing-options">
+        <button class="landing-btn viewer-btn" onclick="enterApp('viewer')">
+          <span class="icon">📊</span>
+          <span class="text">View Standings</span>
+          <span class="subtext">View prepared points and results</span>
+        </button>
+
+        <button class="landing-btn admin-btn" onclick="enterApp('admin')">
+          <span class="icon">⚙️</span>
+          <span class="text">Admin Access</span>
+          <span class="subtext">Manage event data and calculate</span>
+        </button>
       </div>
     </div>
-  </header>
+  </div>
 
-  <!-- Main Container -->
-  <main class="main-container">
-
-    <!-- Event Input Section -->
-    <section class="event-input-section card">
-      <div class="section-header">
-        <h2 class="section-title">📊 Event Data Input</h2>
-        <p class="section-description">Enter Event IDs from speedskatingresults.com to fetch and process race results
-        </p>
+  <div id="app-content" style="display: none;">
+    <!-- Header -->
+    <header class="app-header">
+      <div class="header-content">
+        <div class="header-left">
+          <div class="logo-section">
+            <div>
+              <h1 class="app-title">US Speedskating AmCup</h1>
+              <p class="app-subtitle">2025-2026 Points Tracker</p>
+            </div>
+          </div>
+        </div>
+        <div class="header-right">
+          <div class="season-badge">Season 2025-26</div>
+        </div>
       </div>
+    </header>
 
-      <div class="event-inputs">
-        <div class="event-input-group">
-          <label for="amcup1-id" class="input-label">
-            <span class="label-icon">🥇</span>
-            <span class="label-text">AmCup #1 Event ID</span>
-          </label>
-          <input type="text" id="amcup1-id" class="event-input" placeholder="e.g., 16234" aria-label="AmCup 1 Event ID">
-          <button class="fetch-btn" onclick="fetchEvent('amcup1')">
-            <span class="btn-icon">⬇️</span>
-            Fetch Results
+    <!-- Main Container -->
+    <main class="main-container">
+
+      <!-- Event Input Section -->
+      <section class="event-input-section card">
+        <div class="section-header">
+          <h2 class="section-title">📊 Event Data Input</h2>
+          <p class="section-description">Enter Event IDs from speedskatingresults.com to fetch and process race results
+          </p>
+        </div>
+
+        <div class="event-inputs">
+          <div class="event-input-group">
+            <label for="amcup1-id" class="input-label">
+              <span class="label-icon">🥇</span>
+              <span class="label-text">AmCup #1 Event ID</span>
+            </label>
+            <input type="text" id="amcup1-id" class="event-input" placeholder="e.g., 16234"
+              aria-label="AmCup 1 Event ID">
+            <button class="fetch-btn" onclick="fetchEvent('amcup1')">
+              <span class="btn-icon">⬇️</span>
+              Fetch Results
+            </button>
+          </div>
+
+          <div class="event-input-group">
+            <label for="amcup2-id" class="input-label">
+              <span class="label-icon">🥈</span>
+              <span class="label-text">AmCup #2 Event ID</span>
+            </label>
+            <input type="text" id="amcup2-id" class="event-input" placeholder="e.g., 16235"
+              aria-label="AmCup 2 Event ID">
+            <button class="fetch-btn" onclick="fetchEvent('amcup2')">
+              <span class="btn-icon">⬇️</span>
+              Fetch Results
+            </button>
+          </div>
+
+          <div class="event-input-group">
+            <label for="amcup3-id" class="input-label">
+              <span class="label-icon">🥉</span>
+              <span class="label-text">AmCup Final Event ID</span>
+            </label>
+            <input type="text" id="amcup3-id" class="event-input" placeholder="e.g., 16236"
+              aria-label="AmCup Final Event ID">
+            <button class="fetch-btn" onclick="fetchEvent('amcup3')">
+              <span class="btn-icon">⬇️</span>
+              Fetch Results
+            </button>
+          </div>
+        </div>
+
+        <div class="action-buttons">
+          <button class="primary-btn" onclick="calculateStandings()">
+            <span class="btn-icon">🧮</span>
+            Calculate Season Standings
+          </button>
+          <button class="secondary-btn" onclick="clearAllData()">
+            <span class="btn-icon">🔄</span>
+            Reset All Data
+          </button>
+          <button id="publish-btn" class="secondary-btn" onclick="publishData()"
+            style="display: none; background-color: #28a745; color: white;">
+            <span class="btn-icon">💾</span>
+            Publish Data
           </button>
         </div>
 
-        <div class="event-input-group">
-          <label for="amcup2-id" class="input-label">
-            <span class="label-icon">🥈</span>
-            <span class="label-text">AmCup #2 Event ID</span>
-          </label>
-          <input type="text" id="amcup2-id" class="event-input" placeholder="e.g., 16235" aria-label="AmCup 2 Event ID">
-          <button class="fetch-btn" onclick="fetchEvent('amcup2')">
-            <span class="btn-icon">⬇️</span>
-            Fetch Results
+        <!-- Status Messages -->
+        <div id="status-messages" class="status-messages"></div>
+      </section>
+
+      <!-- Standings Display Section -->
+      <section class="standings-section" id="standings-section" style="display: none;">
+
+        <!-- Category Tabs -->
+        <div class="category-tabs">
+          <button class="tab-btn active" onclick="showCategory('overall')">
+            <span class="tab-icon">🏆</span>
+            Overall
+          </button>
+          <button class="tab-btn" onclick="showCategory('junior')">
+            <span class="tab-icon">🌟</span>
+            Junior
+          </button>
+          <button class="tab-btn" onclick="showCategory('master')">
+            <span class="tab-icon">👑</span>
+            Master
           </button>
         </div>
 
-        <div class="event-input-group">
-          <label for="amcup3-id" class="input-label">
-            <span class="label-icon">🥉</span>
-            <span class="label-text">AmCup Final Event ID</span>
-          </label>
-          <input type="text" id="amcup3-id" class="event-input" placeholder="e.g., 16236"
-            aria-label="AmCup Final Event ID">
-          <button class="fetch-btn" onclick="fetchEvent('amcup3')">
-            <span class="btn-icon">⬇️</span>
-            Fetch Results
-          </button>
-        </div>
-      </div>
-
-      <div class="action-buttons">
-        <button class="primary-btn" onclick="calculateStandings()">
-          <span class="btn-icon">🧮</span>
-          Calculate Season Standings
-        </button>
-        <button class="secondary-btn" onclick="clearAllData()">
-          <span class="btn-icon">🔄</span>
-          Reset All Data
-        </button>
-        <button id="publish-btn" class="secondary-btn" onclick="publishData()"
-          style="display: none; background-color: #28a745; color: white;">
-          <span class="btn-icon">💾</span>
-          Publish Data
-        </button>
-      </div>
-
-      <!-- Status Messages -->
-      <div id="status-messages" class="status-messages"></div>
-    </section>
-
-    <!-- Standings Display Section -->
-    <section class="standings-section" id="standings-section" style="display: none;">
-
-      <!-- Category Tabs -->
-      <div class="category-tabs">
-        <button class="tab-btn active" onclick="showCategory('overall')">
-          <span class="tab-icon">🏆</span>
-          Overall
-        </button>
-        <button class="tab-btn" onclick="showCategory('junior')">
-          <span class="tab-icon">🌟</span>
-          Junior
-        </button>
-        <button class="tab-btn" onclick="showCategory('master')">
-          <span class="tab-icon">👑</span>
-          Master
-        </button>
-      </div>
-
-      <!-- Report Type Tabs -->
-      <div class="report-tabs">
-        <button class="report-tab-btn active" onclick="showReport('sprint')">Sprint Standings</button>
-        <button class="report-tab-btn" onclick="showReport('long-distance')">Long Distance</button>
-        <button class="report-tab-btn" onclick="showReport('500m')">500m</button>
-        <button class="report-tab-btn" onclick="showReport('1000m')">1000m</button>
-        <button class="report-tab-btn" onclick="showReport('1500m')">1500m</button>
-        <button class="report-tab-btn" onclick="showReport('3000m')">3000m</button>
-        <button class="report-tab-btn" onclick="showReport('5000m')">5000m</button>
-        <button class="report-tab-btn" onclick="showReport('mass-start')">Mass Start</button>
-      </div>
-
-      <!-- Gender Filter Buttons -->
-      <div class="gender-filter">
-        <button class="gender-btn active" onclick="filterGender('all')">All</button>
-        <button class="gender-btn" onclick="filterGender('men')">👨 Men</button>
-        <button class="gender-btn" onclick="filterGender('women')">👩 Women</button>
-      </div>
-
-      <!-- Standings Tables Container -->
-      <div id="standings-container" class="standings-container card">
-        <!-- Dynamic content will be inserted here -->
-      </div>
-
-      <!-- Export Actions -->
-      <div class="export-actions">
-        <div class="export-group">
-          <select id="export-type" class="export-select">
-            <option value="full">📜 Full Season Report (Everything)</option>
-            <option value="overall">🏆 Overall Standings Only</option>
-            <option value="sprint">⚡ Sprint Standings Only</option>
-            <option value="long-distance">🏃 Long Distance Only</option>
-            <option value="junior">🌟 Juniors Only</option>
-            <option value="master">👑 Masters Only</option>
-          </select>
-          <button class="export-btn pdf-btn" onclick="generatePDF()">
-            <span class="btn-icon">📄</span>
-            Download PDF
-          </button>
+        <!-- Report Type Tabs -->
+        <div class="report-tabs">
+          <button class="report-tab-btn active" onclick="showReport('sprint')">Sprint Standings</button>
+          <button class="report-tab-btn" onclick="showReport('long-distance')">Long Distance</button>
+          <button class="report-tab-btn" onclick="showReport('500m')">500m</button>
+          <button class="report-tab-btn" onclick="showReport('1000m')">1000m</button>
+          <button class="report-tab-btn" onclick="showReport('1500m')">1500m</button>
+          <button class="report-tab-btn" onclick="showReport('3000m')">3000m</button>
+          <button class="report-tab-btn" onclick="showReport('5000m')">5000m</button>
+          <button class="report-tab-btn" onclick="showReport('mass-start')">Mass Start</button>
         </div>
 
+        <!-- Gender Filter Buttons -->
+        <div class="gender-filter">
+          <button class="gender-btn active" onclick="filterGender('all')">All</button>
+          <button class="gender-btn" onclick="filterGender('men')">👨 Men</button>
+          <button class="gender-btn" onclick="filterGender('women')">👩 Women</button>
+        </div>
 
-      </div>
-    </section>
+        <!-- Standings Tables Container -->
+        <div id="standings-container" class="standings-container card">
+          <!-- Dynamic content will be inserted here -->
+        </div>
 
-  </main>
+        <!-- Export Actions -->
+        <div class="export-actions">
+          <div class="export-group">
+            <select id="export-type" class="export-select">
+              <option value="full">📜 Full Season Report (Everything)</option>
+              <option value="overall">🏆 Overall Standings Only</option>
+              <option value="sprint">⚡ Sprint Standings Only</option>
+              <option value="long-distance">🏃 Long Distance Only</option>
+              <option value="junior">🌟 Juniors Only</option>
+              <option value="master">👑 Masters Only</option>
+            </select>
+            <button class="export-btn pdf-btn" onclick="generatePDF()">
+              <span class="btn-icon">📄</span>
+              Download PDF
+            </button>
+          </div>
 
-  <!-- Footer -->
-  <footer class="app-footer">
 
-    <p class="footer-main">US Speedskating • American Cup Points Tracker</p>
-    <p class="footer-note">ACRS Ranking System • 2025-2026 Season</p>
-    <p class="footer-copyright">&copy; 2025 US Speedskating. All rights reserved.</p>
-  </footer>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+
+      <p class="footer-main">US Speedskating • American Cup Points Tracker</p>
+      <p class="footer-note">ACRS Ranking System • 2025-2026 Season</p>
+      <p class="footer-copyright">&copy; 2025 US Speedskating. All rights reserved.</p>
+    </footer>
+  </div>
 
   <!-- Loading Overlay -->
   <div id="loading-overlay" class="loading-overlay" style="display: none;">
