@@ -58,6 +58,11 @@ async function scrapeRaceResults(eventId) {
                 else if (pageTitle.match(/\b500m\b/i)) distance = '500m';
                 else if (pageTitle.toLowerCase().includes('mass')) distance = 'Mass Start';
 
+                // Extract race label (e.g., "(1)", "(2)", "(Semi 1)")
+                // Ignore "(10 laps)" or similar distance markers
+                const raceLabelMatch = pageTitle.match(/\(\d+\)(?!\s*laps)|Semi \d+|Final/i);
+                const raceLabel = raceLabelMatch ? raceLabelMatch[0] : '';
+
                 if (!distance) continue;
 
                 let gender = 'men';
@@ -82,7 +87,7 @@ async function scrapeRaceResults(eventId) {
                             rank, name, country,
                             category: category || 'Unknown',
                             time: time || 'N/A',
-                            distance, gender,
+                            distance, gender, raceLabel,
                             status: (time.includes('DQ') || time.includes('DNF') || time.includes('DNS')) ? 'DQ/DNF' : 'OK'
                         });
                     }
@@ -113,6 +118,9 @@ function calculatePoints(rank, totalFinishers, status) {
 function classifySkater(category) {
     const categories = { overall: true, junior: false, master: false };
     if (JUNIOR_CATEGORIES.includes(category)) categories.junior = true;
+
+    // Check if this is a Masters skater (M30, M35, ... M80, L30, L35, ... L80)
+    // Masters should NOT be included in "overall" standings
     if (MASTER_AGE_CODES.some(code => category.startsWith(code)) && !category.startsWith('MN')) {
         categories.master = true;
     }
@@ -121,13 +129,36 @@ function classifySkater(category) {
 
 function parseTime(timeStr) {
     if (!timeStr) return 999;
-    const match = timeStr.match(/(\d+),(\d+)(?:\((\d+)\))?/);
-    if (match) {
-        const seconds = parseInt(match[1]);
-        const centiseconds = parseInt(match[2]);
-        const thousandths = match[3] ? parseInt(match[3]) : 0;
+
+    // Handle DQ/DNF/DNS
+    if (timeStr.includes('DQ') || timeStr.includes('DNF') || timeStr.includes('DNS')) {
+        return 999;
+    }
+
+    // Format: M.SS,cc (e.g., "1.03,66" = 1 min, 3.66 sec = 63.66 total)
+    // Or: SS,cc (e.g., "35,98" = 35.98 seconds)
+    // Or: SS,cc(t) with thousandths (e.g., "39,42(0)")
+
+    // Try M.SS,cc format first (with optional thousandths)
+    const minSecMatch = timeStr.match(/^(\d+)\.(\d+),(\d+)(?:\((\d+)\))?$/);
+    if (minSecMatch) {
+        const minutes = parseInt(minSecMatch[1]);
+        const seconds = parseInt(minSecMatch[2]);
+        const centiseconds = parseInt(minSecMatch[3]);
+        const thousandths = minSecMatch[4] ? parseInt(minSecMatch[4]) : 0;
+        return (minutes * 60) + seconds + (centiseconds / 100) + (thousandths / 1000);
+    }
+
+    // Try SS,cc format (with optional thousandths)
+    const secMatch = timeStr.match(/^(\d+),(\d+)(?:\((\d+)\))?$/);
+    if (secMatch) {
+        const seconds = parseInt(secMatch[1]);
+        const centiseconds = parseInt(secMatch[2]);
+        const thousandths = secMatch[3] ? parseInt(secMatch[3]) : 0;
         return seconds + (centiseconds / 100) + (thousandths / 1000);
     }
+
+    // Fallback
     return parseFloat(timeStr.replace(',', '.')) || 999;
 }
 
@@ -136,18 +167,48 @@ function processRaceData(raceResults, eventName) {
     const byDistanceGender = {};
 
     raceResults.forEach(result => {
-        const key = `${result.distance}-${result.gender}`;
+        // Only use raceLabel for Mass Start (to split races)
+        // For 500m (and others), ignore label so they merge into one group
+        const isMassStart = result.distance === 'Mass Start';
+        const groupLabel = isMassStart ? (result.raceLabel || '') : '';
+        const key = `${result.distance}|${result.gender}|${groupLabel}`;
+
         if (!byDistanceGender[key]) byDistanceGender[key] = [];
         byDistanceGender[key].push(result);
     });
 
     Object.keys(byDistanceGender).forEach(key => {
         const groupResults = byDistanceGender[key];
-        const [distance, gender] = key.split('-');
+        const [distance, gender, raceLabel] = key.split('|');
 
-        const sortedResults = groupResults.sort((a, b) => {
+        // Deduplicate logic for Non-Mass Start (e.g., 500m)
+        // Keep only the best result (lowest time) for each skater
+        let resultsToProcess = groupResults;
+        if (distance !== 'Mass Start') {
+            const bestResults = {};
+            groupResults.forEach(r => {
+                const currentBest = bestResults[r.name];
+                const rTime = parseTime(r.time);
+
+                if (!currentBest) {
+                    bestResults[r.name] = r;
+                } else {
+                    const bestTime = parseTime(currentBest.time);
+                    if (rTime < bestTime) {
+                        bestResults[r.name] = r;
+                    }
+                }
+            });
+            resultsToProcess = Object.values(bestResults);
+        }
+
+        const sortedResults = resultsToProcess.sort((a, b) => {
             const rankA = parseInt(a.rank) || 999;
             const rankB = parseInt(b.rank) || 999;
+            // For merged events (500m), we prioritize TIME, not the original rank from the sub-race
+            if (distance !== 'Mass Start') {
+                return parseTime(a.time) - parseTime(b.time);
+            }
             if (rankA !== rankB) return rankA - rankB;
             return parseTime(a.time) - parseTime(b.time);
         });
@@ -175,7 +236,8 @@ function processRaceData(raceResults, eventName) {
             if (!standings.overall[result.name].distances[distance]) {
                 standings.overall[result.name].distances[distance] = {};
             }
-            standings.overall[result.name].distances[distance][eventName] = points;
+            const pointKey = raceLabel ? `${eventName} ${raceLabel}` : eventName;
+            standings.overall[result.name].distances[distance][pointKey] = points;
             standings.overall[result.name].totalPoints += points;
         });
 
@@ -198,7 +260,8 @@ function processRaceData(raceResults, eventName) {
             if (!standings.junior[result.name].distances[distance]) {
                 standings.junior[result.name].distances[distance] = {};
             }
-            standings.junior[result.name].distances[distance][eventName] = juniorPoints;
+            const pointKey = raceLabel ? `${eventName} ${raceLabel}` : eventName;
+            standings.junior[result.name].distances[distance][pointKey] = juniorPoints;
             standings.junior[result.name].totalPoints += juniorPoints;
         });
 
@@ -221,7 +284,8 @@ function processRaceData(raceResults, eventName) {
             if (!standings.master[result.name].distances[distance]) {
                 standings.master[result.name].distances[distance] = {};
             }
-            standings.master[result.name].distances[distance][eventName] = masterPoints;
+            const pointKey = raceLabel ? `${eventName} ${raceLabel}` : eventName;
+            standings.master[result.name].distances[distance][pointKey] = masterPoints;
             standings.master[result.name].totalPoints += masterPoints;
         });
     });
@@ -318,7 +382,21 @@ app.post('/api/scrape-event', async (req, res) => {
 function drawTable(doc, title, headers, rows, options = {}) {
     const startX = 50;
     let currentY = doc.y;
-    const colWidth = (options.width || 500) / headers.length;
+    const tableWidth = options.width || 500;
+
+    // Calculate column widths based on column types
+    // First 3 columns: Rank (35), Name (varies), Category (45)
+    // Remaining columns: equal width for #1, #2, Total (70 each)
+    const numPointsCols = Math.max(0, headers.length - 3);
+    const rankWidth = 35;
+    const catWidth = 45;
+    const pointsColWidth = 70;
+    const nameWidth = tableWidth - rankWidth - catWidth - (numPointsCols * pointsColWidth);
+
+    const colWidths = [rankWidth, nameWidth, catWidth];
+    for (let i = 0; i < numPointsCols; i++) {
+        colWidths.push(pointsColWidth);
+    }
 
     // Check for page break
     if (currentY + 100 > doc.page.height - 50) {
@@ -331,42 +409,55 @@ function drawTable(doc, title, headers, rows, options = {}) {
     currentY += 30;
 
     // Header
-    doc.rect(startX, currentY, options.width || 500, 20).fill(options.headerColor || '#003087');
-    doc.fillColor('white').fontSize(10);
+    doc.rect(startX, currentY, tableWidth, 20).fill(options.headerColor || '#003087');
+    doc.fillColor('white').fontSize(9);
 
+    let xPos = startX;
     headers.forEach((header, i) => {
-        doc.text(header, startX + (i * colWidth) + 5, currentY + 5, { width: colWidth - 10, align: 'left' });
+        const w = colWidths[i] || 50;
+        // Rank and points columns centered, Name and Cat left-aligned
+        const align = (i === 0 || i >= 3) ? 'center' : 'left';
+        doc.text(header, xPos + 2, currentY + 5, { width: w - 4, align: align });
+        xPos += w;
     });
 
     currentY += 20;
 
     // Rows
-    doc.fillColor('black');
+    doc.fillColor('black').fontSize(9);
     rows.forEach((row, rowIndex) => {
         // Check for page break inside table
-        if (currentY + 20 > doc.page.height - 50) {
+        if (currentY + 18 > doc.page.height - 50) {
             doc.addPage();
             currentY = 50;
             // Redraw header
-            doc.rect(startX, currentY, options.width || 500, 20).fill(options.headerColor || '#003087');
-            doc.fillColor('white');
+            doc.rect(startX, currentY, tableWidth, 20).fill(options.headerColor || '#003087');
+            doc.fillColor('white').fontSize(9);
+            let hxPos = startX;
             headers.forEach((header, i) => {
-                doc.text(header, startX + (i * colWidth) + 5, currentY + 5, { width: colWidth - 10, align: 'left' });
+                const w = colWidths[i] || 50;
+                const align = (i === 0 || i >= 3) ? 'center' : 'left';
+                doc.text(header, hxPos + 2, currentY + 5, { width: w - 4, align: align });
+                hxPos += w;
             });
             currentY += 20;
-            doc.fillColor('black');
+            doc.fillColor('black').fontSize(9);
         }
 
         // Stripe row
         if (rowIndex % 2 === 1) {
-            doc.rect(startX, currentY, options.width || 500, 20).fill('#f5f5f5');
-            doc.fillColor('black'); // Reset fill after stripe
+            doc.rect(startX, currentY, tableWidth, 18).fill('#f5f5f5');
+            doc.fillColor('black');
         }
 
+        let xPos = startX;
         row.forEach((cell, i) => {
-            doc.text(cell.toString(), startX + (i * colWidth) + 5, currentY + 5, { width: colWidth - 10, align: 'left' });
+            const w = colWidths[i] || 50;
+            const align = (i === 0 || i >= 3) ? 'center' : 'left';
+            doc.text(cell.toString(), xPos + 2, currentY + 4, { width: w - 4, align: align });
+            xPos += w;
         });
-        currentY += 20;
+        currentY += 18;
     });
 
     doc.moveDown(2);

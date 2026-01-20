@@ -479,14 +479,38 @@ function renderStandingsTable(skaters, showDetails = false) {
     html += '<th>Name</th>';
     html += '<th>Category</th>';
 
+    // Detect if details are flat (individual distance) or nested (combination)
+    let isFlat = false;
+    let eventNames = [];
+
     if (showDetails && skaters.length > 0 && skaters[0].details) {
-        const eventKeys = Object.keys(skaters[0].details);
-        eventKeys.forEach(key => {
-            const events = skaters[0].details[key];
-            Object.keys(events).forEach(eventName => {
-                html += `<th>${key}<br>${eventName}</th>`;
+        const firstKey = Object.keys(skaters[0].details)[0];
+        const firstValue = skaters[0].details[firstKey];
+
+        if (typeof firstValue === 'number') {
+            // Flat structure: {AmCup #1: 60, AmCup #2: 48}
+            isFlat = true;
+            // Collect all unique event names across all skaters
+            skaters.forEach(skater => {
+                Object.keys(skater.details).forEach(eventName => {
+                    if (!eventNames.includes(eventName)) {
+                        eventNames.push(eventName);
+                    }
+                });
             });
-        });
+            eventNames.forEach(eventName => {
+                html += `<th>${eventName}</th>`;
+            });
+        } else {
+            // Nested structure: {500m: {AmCup #1: 60}, 1000m: {...}}
+            const eventKeys = Object.keys(skaters[0].details);
+            eventKeys.forEach(key => {
+                const events = skaters[0].details[key];
+                Object.keys(events).forEach(eventName => {
+                    html += `<th>${key}<br>${eventName}</th>`;
+                });
+            });
+        }
     }
 
     html += '<th>Total Points</th>';
@@ -505,11 +529,20 @@ function renderStandingsTable(skaters, showDetails = false) {
         html += `<td>${skater.category}</td>`;
 
         if (showDetails && skater.details) {
-            Object.values(skater.details).forEach(distPoints => {
-                Object.values(distPoints).forEach(points => {
-                    html += `<td>${points}</td>`;
+            if (isFlat) {
+                // Flat: render each event's points in order
+                eventNames.forEach(eventName => {
+                    const pts = skater.details[eventName] || '-';
+                    html += `<td>${pts}</td>`;
                 });
-            });
+            } else {
+                // Nested: iterate through distances and events
+                Object.values(skater.details).forEach(distPoints => {
+                    Object.values(distPoints).forEach(points => {
+                        html += `<td>${points}</td>`;
+                    });
+                });
+            }
         }
 
         html += `<td><strong>${skater.points}</strong></td>`;
@@ -554,14 +587,22 @@ async function generatePDF() {
         }
 
         const blob = await response.blob();
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `AmCup-Standings-${new Date().toISOString().split('T')[0]}.pdf`;
-        document.body.appendChild(a);
-        a.click();
-        window.URL.revokeObjectURL(url);
-        document.body.removeChild(a);
+        // Open PDF in new tab - more reliable than forced download
+        const pdfBlob = new Blob([blob], { type: 'application/pdf' });
+        const url = window.URL.createObjectURL(pdfBlob);
+
+        // Open in new tab
+        const pdfWindow = window.open(url, '_blank');
+
+        if (!pdfWindow) {
+            // If popup blocked, fall back to direct navigation
+            window.location.href = url;
+        }
+
+        // Cleanup after a delay
+        setTimeout(() => {
+            window.URL.revokeObjectURL(url);
+        }, 5000);
 
         showStatus('success', '✅ PDF report generated successfully');
     } catch (error) {
@@ -680,15 +721,7 @@ document.addEventListener('DOMContentLoaded', () => {
  * @param {string} mode - 'viewer' or 'admin'
  */
 function enterApp(mode) {
-    // Password check for admin
-    if (mode === 'admin') {
-        const password = prompt('Please enter the admin password:');
-        if (password !== 'speed') {
-            alert('❌ Incorrect password');
-            return;
-        }
-    }
-
+    // Direct access - no password required for Admin Mode
     const landingScreen = document.getElementById('landing-screen');
     const appContent = document.getElementById('app-content');
 
