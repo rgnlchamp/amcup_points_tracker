@@ -12,7 +12,7 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@600;700;800&display=swap"
     rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/styles.css?v=2">
 </head>
 
 <body>
@@ -63,7 +63,7 @@
       <section id="input-section" class="event-input-section card">
         <div class="section-header">
           <h2 class="section-title">📊 Event Data Input</h2>
-          <p class="section-description">Enter Event IDs from speedskatingresults.com to fetch and process race results
+          <p class="section-description">Enter Event IDs from speedskatingresults.com or use `LIVE:[id]` for live events
           </p>
         </div>
 
@@ -79,6 +79,32 @@
               <span class="btn-icon">⬇️</span>
               Fetch Results
             </button>
+            <button class="paste-toggle-btn" onclick="togglePaste('amcup1')">
+              <span class="btn-icon">📋</span>
+              Paste Results
+            </button>
+            <div id="paste-section-amcup1" class="paste-section" style="display: none;">
+              <div class="paste-controls">
+                <select id="paste-distance-amcup1" class="paste-select">
+                  <option value="500m">500m</option>
+                  <option value="1000m">1000m</option>
+                  <option value="1500m">1500m</option>
+                  <option value="3000m">3000m</option>
+                  <option value="5000m">5000m</option>
+                  <option value="Mass Start">Mass Start</option>
+                </select>
+                <select id="paste-gender-amcup1" class="paste-select">
+                  <option value="women">Women</option>
+                  <option value="men">Men</option>
+                </select>
+              </div>
+              <textarea id="paste-text-amcup1" class="paste-textarea" rows="6"
+                placeholder="Paste results from speedskatingresults.com here..."></textarea>
+              <button class="fetch-btn" onclick="importPastedResults('amcup1')">
+                <span class="btn-icon">📥</span>
+                Import Pasted Results
+              </button>
+            </div>
           </div>
 
           <div class="event-input-group">
@@ -92,6 +118,32 @@
               <span class="btn-icon">⬇️</span>
               Fetch Results
             </button>
+            <button class="paste-toggle-btn" onclick="togglePaste('amcup2')">
+              <span class="btn-icon">📋</span>
+              Paste Results
+            </button>
+            <div id="paste-section-amcup2" class="paste-section" style="display: none;">
+              <div class="paste-controls">
+                <select id="paste-distance-amcup2" class="paste-select">
+                  <option value="500m">500m</option>
+                  <option value="1000m">1000m</option>
+                  <option value="1500m">1500m</option>
+                  <option value="3000m">3000m</option>
+                  <option value="5000m">5000m</option>
+                  <option value="Mass Start">Mass Start</option>
+                </select>
+                <select id="paste-gender-amcup2" class="paste-select">
+                  <option value="women">Women</option>
+                  <option value="men">Men</option>
+                </select>
+              </div>
+              <textarea id="paste-text-amcup2" class="paste-textarea" rows="6"
+                placeholder="Paste results from speedskatingresults.com here..."></textarea>
+              <button class="fetch-btn" onclick="importPastedResults('amcup2')">
+                <span class="btn-icon">📥</span>
+                Import Pasted Results
+              </button>
+            </div>
           </div>
 
           <div class="event-input-group">
@@ -99,12 +151,38 @@
               <span class="label-icon">🥉</span>
               <span class="label-text">AmCup Final Event ID</span>
             </label>
-            <input type="text" id="amcup3-id" class="event-input" placeholder="e.g., 16236"
+            <input type="text" id="amcup3-id" class="event-input" placeholder="e.g., 16236 or LIVE:1"
               aria-label="AmCup Final Event ID">
             <button class="fetch-btn" onclick="fetchEvent('amcup3', true)">
               <span class="btn-icon">⬇️</span>
               Fetch Results
             </button>
+            <button class="paste-toggle-btn" onclick="togglePaste('amcup3')">
+              <span class="btn-icon">📋</span>
+              Paste Results
+            </button>
+            <div id="paste-section-amcup3" class="paste-section" style="display: none;">
+              <div class="paste-controls">
+                <select id="paste-distance-amcup3" class="paste-select">
+                  <option value="500m">500m</option>
+                  <option value="1000m">1000m</option>
+                  <option value="1500m">1500m</option>
+                  <option value="3000m">3000m</option>
+                  <option value="5000m">5000m</option>
+                  <option value="Mass Start">Mass Start</option>
+                </select>
+                <select id="paste-gender-amcup3" class="paste-select">
+                  <option value="women">Women</option>
+                  <option value="men">Men</option>
+                </select>
+              </div>
+              <textarea id="paste-text-amcup3" class="paste-textarea" rows="6"
+                placeholder="Paste results from speedskatingresults.com here..."></textarea>
+              <button class="fetch-btn" onclick="importPastedResults('amcup3')">
+                <span class="btn-icon">📥</span>
+                Import Pasted Results
+              </button>
+            </div>
           </div>
         </div>
 
@@ -209,7 +287,7 @@
     <p class="loading-text">Processing race data...</p>
   </div>
 
-  <script src="js/app.js"></script>
+  <script src="js/app.js?v=5"></script>
 </body>
 
 </html>

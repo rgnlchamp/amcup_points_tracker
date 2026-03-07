@@ -29,10 +29,11 @@ async function fetchEvent(eventKey, forceRefresh = false) {
         return;
     }
 
-    // Check localStorage first (unless force refresh)
+    // Check localStorage first (unless force refresh or LIVE event)
     const storageKey = `amcup_event_${eventKey}_${eventId}`;
+    const isLive = eventId.toUpperCase().startsWith('LIVE:');
 
-    if (!forceRefresh) {
+    if (!forceRefresh && !isLive) {
         const cachedData = localStorage.getItem(storageKey);
         if (cachedData) {
             try {
@@ -72,12 +73,14 @@ async function fetchEvent(eventKey, forceRefresh = false) {
         // Store event data
         appState.events[eventKey] = data;
 
-        // Save to localStorage
-        try {
-            localStorage.setItem(storageKey, JSON.stringify(data));
-            console.log(`Saved ${eventName} to localStorage`);
-        } catch (e) {
-            console.warn('Failed to save to localStorage:', e);
+        // Save to localStorage (only non-live events)
+        if (!isLive) {
+            try {
+                localStorage.setItem(storageKey, JSON.stringify(data));
+                console.log(`Saved ${eventName} to localStorage`);
+            } catch (e) {
+                console.warn('Failed to save to localStorage:', e);
+            }
         }
 
         showStatus('success', `✅ Successfully fetched ${data.results.length} USA results from ${eventName}`);
@@ -202,84 +205,85 @@ function mergeEventStandings(events) {
  */
 function calculateCombinations(allStandings) {
     const combinations = {
-        overall: { sprint: { men: [], women: [] }, longDistance: { men: [], women: [] } },
-        junior: { sprint: { men: [], women: [] }, longDistance: { men: [], women: [] } },
-        master: { sprint: { men: [], women: [] }, longDistance: { men: [], women: [] } }
+        overall: { sprint: { men: [], women: [] }, longDistance: { men: [], women: [] } }
     };
 
-    ['overall', 'junior', 'master'].forEach(category => {
-        const categoryStandings = allStandings[category];
+    // Only calculate combinations for overall — Sprint and Long Distance are overall-only competitions
+    const categoryStandings = allStandings.overall;
 
-        Object.values(categoryStandings).forEach(skater => {
-            // Improved gender detection - check category code or use 'men' as default
-            let gender = 'men';
-            if (skater.category) {
-                const cat = skater.category.toUpperCase();
-                // Women's categories start with L (Ladies) or W (Women)
-                if (cat.startsWith('L') || cat.startsWith('W') || cat.includes('WOMEN') || cat.includes('LADIES')) {
-                    gender = 'women';
+    Object.values(categoryStandings).forEach(skater => {
+        // Improved gender detection - check category code or use 'men' as default
+        let gender = 'men';
+        if (skater.category) {
+            const cat = skater.category.toUpperCase();
+            // Women's categories start with L (Ladies) or W (Women)
+            if (cat.startsWith('L') || cat.startsWith('W') || cat.includes('WOMEN') || cat.includes('LADIES')) {
+                gender = 'women';
+            }
+            // Men's categories start with M (but not Master indicators like M30, M35 which need distance-based detection)
+            // If category looks like M followed by non-digit, it's likely Men
+            else if (cat.match(/^M[ABC]/)) {
+                gender = 'men';
+            }
+        }
+
+        // Sprint (500m + 1000m)
+        const sprint500 = skater.distances['500m'] || {};
+        const sprint1000 = skater.distances['1000m'] || {};
+        const sprintPoints = sumPoints(sprint500) + sumPoints(sprint1000);
+
+        if (sprintPoints > 0) {
+            combinations.overall.sprint[gender].push({
+                name: skater.name,
+                category: skater.category,
+                points: sprintPoints,
+                details: {
+                    '500m': sprint500,
+                    '1000m': sprint1000
                 }
-                // Men's categories start with M (but not Master indicators like M30, M35 which need distance-based detection)
-                // If category looks like M followed by non-digit, it's likely Men
-                else if (cat.match(/^M[ABC]/)) {
-                    gender = 'men';
-                }
-            }
+            });
+        }
 
-            // Sprint (500m + 1000m)
-            const sprint500 = skater.distances['500m'] || {};
-            const sprint1000 = skater.distances['1000m'] || {};
-            const sprintPoints = sumPoints(sprint500) + sumPoints(sprint1000);
+        // Long Distance
+        const ld1500 = skater.distances['1500m'] || {};
+        const ld3000 = skater.distances['3000m'] || {};
+        const ld5000 = skater.distances['5000m'] || {};
+        const ldMass = skater.distances['Mass Start'] || {};
 
-            if (sprintPoints > 0) {
-                combinations[category].sprint[gender].push({
-                    name: skater.name,
-                    category: skater.category,
-                    points: sprintPoints,
-                    details: {
-                        '500m': sprint500,
-                        '1000m': sprint1000
-                    }
-                });
-            }
+        let ldPoints = sumPoints(ld1500) + sumPoints(ldMass);
+        const details = {
+            '1500m': ld1500,
+            'Mass Start': ldMass
+        };
 
-            // Long Distance
-            const ld1500 = skater.distances['1500m'] || {};
-            const ld3000 = skater.distances['3000m'] || {};
-            const ld5000 = skater.distances['5000m'] || {};
-            const ldMass = skater.distances['Mass Start'] || {};
+        // Women: include 3000m, Men: include 5000m
+        if (gender === 'women') {
+            ldPoints += sumPoints(ld3000);
+            details['3000m'] = ld3000;
+        } else {
+            ldPoints += sumPoints(ld5000);
+            details['5000m'] = ld5000;
+        }
 
-            let ldPoints = sumPoints(ld1500) + sumPoints(ldMass);
-            const details = {
-                '1500m': ld1500,
-                'Mass Start': ldMass
-            };
-
-            // Women: include 3000m, Men: include 5000m
-            if (gender === 'women') {
-                ldPoints += sumPoints(ld3000);
-                details['3000m'] = ld3000;
-            } else {
-                ldPoints += sumPoints(ld5000);
-                details['5000m'] = ld5000;
-            }
-
-            if (ldPoints > 0) {
-                combinations[category].longDistance[gender].push({
-                    name: skater.name,
-                    category: skater.category,
-                    points: ldPoints,
-                    details: details
-                });
-            }
-        });
-
-        // Sort all by points (descending)
-        combinations[category].sprint.men.sort((a, b) => b.points - a.points);
-        combinations[category].sprint.women.sort((a, b) => b.points - a.points);
-        combinations[category].longDistance.men.sort((a, b) => b.points - a.points);
-        combinations[category].longDistance.women.sort((a, b) => b.points - a.points);
+        if (ldPoints > 0) {
+            combinations.overall.longDistance[gender].push({
+                name: skater.name,
+                category: skater.category,
+                points: ldPoints,
+                details: details
+            });
+        }
     });
+
+    // Sort all by points (descending), with tiebreaker: best result in most recent event wins
+    const comboTiebreaker = (a, b) => {
+        if (b.points !== a.points) return b.points - a.points;
+        return tiebreakerCompare(a.details, b.details, true);
+    };
+    combinations.overall.sprint.men.sort(comboTiebreaker);
+    combinations.overall.sprint.women.sort(comboTiebreaker);
+    combinations.overall.longDistance.men.sort(comboTiebreaker);
+    combinations.overall.longDistance.women.sort(comboTiebreaker);
 
     return combinations;
 }
@@ -289,6 +293,60 @@ function calculateCombinations(allStandings) {
  */
 function sumPoints(pointsObj) {
     return Object.values(pointsObj).reduce((sum, val) => sum + val, 0);
+}
+
+/**
+ * Tiebreaker comparator: compare two skaters' details event-by-event
+ * from most recent event to oldest. Returns negative if A wins, positive if B wins.
+ * For flat details: {AmCup #1: 60, AmCup #2: 48}
+ * For nested details: {500m: {AmCup #1: 60}, 1000m: {AmCup #3: 48}}
+ */
+function tiebreakerCompare(detailsA, detailsB, isNested = false) {
+    if (isNested) {
+        // Nested: collect all event names across all distances, then compare event-by-event
+        const allEvents = new Set();
+        [detailsA, detailsB].forEach(details => {
+            if (!details) return;
+            Object.values(details).forEach(distObj => {
+                if (typeof distObj === 'object' && distObj !== null) {
+                    Object.keys(distObj).forEach(ev => allEvents.add(ev));
+                }
+            });
+        });
+        // Sort events descending (most recent first): AmCup #3, AmCup #2, AmCup #1
+        const sortedEvents = [...allEvents].sort().reverse();
+        for (const eventName of sortedEvents) {
+            let sumA = 0, sumB = 0;
+            if (detailsA) {
+                Object.values(detailsA).forEach(distObj => {
+                    if (typeof distObj === 'object' && distObj !== null && distObj[eventName]) {
+                        sumA += distObj[eventName];
+                    }
+                });
+            }
+            if (detailsB) {
+                Object.values(detailsB).forEach(distObj => {
+                    if (typeof distObj === 'object' && distObj !== null && distObj[eventName]) {
+                        sumB += distObj[eventName];
+                    }
+                });
+            }
+            if (sumA !== sumB) return sumB - sumA; // higher points wins (negative = A wins)
+        }
+        return 0;
+    }
+    // Flat: collect all event names from both skaters
+    const allEvents = new Set();
+    if (detailsA) Object.keys(detailsA).forEach(k => allEvents.add(k));
+    if (detailsB) Object.keys(detailsB).forEach(k => allEvents.add(k));
+    // Sort descending (most recent first)
+    const sortedEvents = [...allEvents].sort().reverse();
+    for (const eventName of sortedEvents) {
+        const ptsA = (detailsA && detailsA[eventName]) || 0;
+        const ptsB = (detailsB && detailsB[eventName]) || 0;
+        if (ptsA !== ptsB) return ptsB - ptsA;
+    }
+    return 0;
 }
 
 /**
@@ -378,10 +436,17 @@ function renderStandings() {
  * Render combination standings (Sprint or Long Distance)
  */
 function renderCombinationStandings(type, category) {
-    const data = appState.combinations[category][type];
+    // Combination standings are only available for Overall
+    if (category !== 'overall') {
+        const typeName = type === 'sprint' ? 'Sprint' : 'Long Distance';
+        return `<h3 class="section-title">${typeName} Combination - ${capitalizeFirst(category)}</h3>
+                <p class="text-center text-muted">Combination standings (Sprint & Long Distance) are only available for the Overall category. Select individual distances (500m, 1000m, etc.) to view ${capitalizeFirst(category)} standings.</p>`;
+    }
+
+    const data = appState.combinations.overall[type];
     const title = type === 'sprint' ? 'Overall Sprint' : 'Overall Long Distance';
 
-    let html = `<h3 class="section-title">${title} - ${capitalizeFirst(category)}</h3>`;
+    let html = `<h3 class="section-title">${title}</h3>`;
 
     const gender = appState.currentGender;
 
@@ -433,9 +498,13 @@ function renderIndividualDistance(distance, category) {
             }
         }
     });
+    console.log(`[renderIndividualDistance] ${distance}: ${skaters.length} skaters, sample details:`, skaters.length > 0 ? skaters[0].details : 'none');
 
-    // Sort by points
-    skaters.sort((a, b) => b.points - a.points);
+    // Sort by points, tiebreaker: best result in most recent event wins
+    skaters.sort((a, b) => {
+        if (b.points !== a.points) return b.points - a.points;
+        return tiebreakerCompare(a.details, b.details);
+    });
 
     // Separate by gender
     const men = skaters.filter(s => s.category.startsWith('M'));
@@ -481,35 +550,70 @@ function renderStandingsTable(skaters, showDetails = false) {
 
     // Detect if details are flat (individual distance) or nested (combination)
     let isFlat = false;
-    let eventNames = [];
+    let eventNames = []; // Used for flat
+    let nestedCols = []; // Used for nested [{key: '500m', eventName: 'AmCup #1'}, ...]
 
-    if (showDetails && skaters.length > 0 && skaters[0].details) {
-        const firstKey = Object.keys(skaters[0].details)[0];
-        const firstValue = skaters[0].details[firstKey];
+    if (showDetails && skaters.length > 0 && skaters.some(s => s.details)) {
+        // Find first skater with details to determine structure type
+        const firstSkaterWithDetails = skaters.find(s => s.details && Object.keys(s.details).length > 0);
 
-        if (typeof firstValue === 'number') {
-            // Flat structure: {AmCup #1: 60, AmCup #2: 48}
-            isFlat = true;
-            // Collect all unique event names across all skaters
-            skaters.forEach(skater => {
-                Object.keys(skater.details).forEach(eventName => {
-                    if (!eventNames.includes(eventName)) {
-                        eventNames.push(eventName);
-                    }
+        if (firstSkaterWithDetails) {
+            // Check if ALL keys hold numbers (isFlat) or if ANY key holds an object (isNested)
+            let hasNestedObjects = false;
+            let hasNumbers = false;
+
+            Object.values(firstSkaterWithDetails.details).forEach(val => {
+                if (typeof val === 'object' && val !== null) hasNestedObjects = true;
+                if (typeof val === 'number') hasNumbers = true;
+            });
+
+            // Even if empty objects are found, unless there's a nested object, default to flat if it has numbers
+            // Or if it purely has numbers, it's flat.
+            if (!hasNestedObjects && hasNumbers) {
+                // Flat structure: {AmCup #1: 60, AmCup #2: 48}
+                isFlat = true;
+                // Collect all unique event names across all skaters
+                skaters.forEach(skater => {
+                    if (!skater.details) return;
+                    Object.keys(skater.details).forEach(eventName => {
+                        if (!eventNames.includes(eventName)) {
+                            eventNames.push(eventName);
+                        }
+                    });
                 });
-            });
-            eventNames.forEach(eventName => {
-                html += `<th>${eventName}</th>`;
-            });
-        } else {
-            // Nested structure: {500m: {AmCup #1: 60}, 1000m: {...}}
-            const eventKeys = Object.keys(skaters[0].details);
-            eventKeys.forEach(key => {
-                const events = skaters[0].details[key];
-                Object.keys(events).forEach(eventName => {
-                    html += `<th>${key}<br>${eventName}</th>`;
+                eventNames.sort();
+                console.log('[renderTable] isFlat=true, eventNames:', eventNames);
+                eventNames.forEach(eventName => {
+                    html += `<th>${eventName}</th>`;
                 });
-            });
+            } else {
+                // Nested structure: {500m: {AmCup #1: 60}, 1000m: {...}}
+                // Collect all distance+event pairs across all skaters
+                skaters.forEach(skater => {
+                    if (!skater.details) return;
+                    Object.keys(skater.details).forEach(distKey => {
+                        Object.keys(skater.details[distKey]).forEach(eventName => {
+                            const exists = nestedCols.some(col => col.dist === distKey && col.event === eventName);
+                            if (!exists) {
+                                nestedCols.push({ dist: distKey, event: eventName });
+                            }
+                        });
+                    });
+                });
+
+                // Group by distance to keep columns ordered logically (all 500m together, then all 1000m)
+                nestedCols.sort((a, b) => {
+                    if (a.dist < b.dist) return -1;
+                    if (a.dist > b.dist) return 1;
+                    if (a.event < b.event) return -1;
+                    if (a.event > b.event) return 1;
+                    return 0;
+                });
+
+                nestedCols.forEach(col => {
+                    html += `<th>${col.dist}<br>${col.event}</th>`;
+                });
+            }
         }
     }
 
@@ -528,19 +632,21 @@ function renderStandingsTable(skaters, showDetails = false) {
         html += `<td>${skater.name}</td>`;
         html += `<td>${skater.category}</td>`;
 
-        if (showDetails && skater.details) {
+        if (showDetails) {
             if (isFlat) {
                 // Flat: render each event's points in order
                 eventNames.forEach(eventName => {
-                    const pts = skater.details[eventName] || '-';
+                    const pts = (skater.details && skater.details[eventName]) ? skater.details[eventName] : '-';
                     html += `<td>${pts}</td>`;
                 });
             } else {
-                // Nested: iterate through distances and events
-                Object.values(skater.details).forEach(distPoints => {
-                    Object.values(distPoints).forEach(points => {
-                        html += `<td>${points}</td>`;
-                    });
+                // Nested: iterate through our collected standard columns
+                nestedCols.forEach(col => {
+                    let pts = '-';
+                    if (skater.details && skater.details[col.dist] && skater.details[col.dist][col.event]) {
+                        pts = skater.details[col.dist][col.event];
+                    }
+                    html += `<td>${pts}</td>`;
                 });
             }
         }
@@ -708,6 +814,146 @@ function showLoading(show) {
  */
 function capitalizeFirst(str) {
     return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+/**
+ * Toggle paste section visibility
+ */
+function togglePaste(eventKey) {
+    const section = document.getElementById(`paste-section-${eventKey}`);
+    if (section) {
+        section.style.display = section.style.display === 'none' ? 'block' : 'none';
+    }
+}
+
+/**
+ * Parse pasted results text and import into event data.
+ * Expects tab-separated rows copied from speedskatingresults.com live or results pages.
+ * Typical formats:
+ *   Live:  [rank] [status] [name] [category] [empty] [country] [time] [behind] [note] [pair]
+ *   Standard: [rank] [name] [category] [empty] [country] [time] ...
+ * We look for rows containing "USA" and extract rank, name, category, time.
+ */
+async function importPastedResults(eventKey) {
+    const distance = document.getElementById(`paste-distance-${eventKey}`).value;
+    const gender = document.getElementById(`paste-gender-${eventKey}`).value;
+    const text = document.getElementById(`paste-text-${eventKey}`).value.trim();
+
+    if (!text) {
+        showStatus('error', 'Please paste some results first');
+        return;
+    }
+
+    const lines = text.split('\n').filter(l => l.trim());
+    const parsedResults = [];
+
+    for (const line of lines) {
+        // Split by tab first, then fall back to multiple spaces
+        let cells = line.split('\t').map(c => c.trim()).filter(c => c !== '');
+        if (cells.length < 4) {
+            cells = line.split(/\s{2,}/).map(c => c.trim()).filter(c => c !== '');
+        }
+        if (cells.length < 4) continue;
+
+        // Must contain "USA" somewhere
+        if (!cells.some(c => c === 'USA')) continue;
+
+        // Find the LAST "USA" cell index — the time is the next non-USA cell after it
+        let lastUsaIndex = -1;
+        for (let i = cells.length - 1; i >= 0; i--) {
+            if (cells[i] === 'USA') { lastUsaIndex = i; break; }
+        }
+        if (lastUsaIndex === -1) continue;
+
+        // Time is the cell right after the last USA
+        const time = cells[lastUsaIndex + 1] || '';
+
+        // The first 3 meaningful cells are always: rank, name, category
+        // Skip any cell that is "USA" or looks like a status letter (O, I) in live pages
+        let rank = cells[0];
+        let name, category;
+
+        // Check if cell[1] is a single-letter status (live page: rank, status, name, cat...)
+        if (cells[1] && cells[1].length === 1 && /^[OI]$/.test(cells[1])) {
+            // Live layout: rank, status, name, category, ...
+            name = cells[2];
+            category = cells[3];
+        } else {
+            // Standard/results layout: rank, name, category, ...  
+            name = cells[1];
+            category = cells[2];
+        }
+
+        // Clean rank - might be empty for in-progress skaters
+        if (!rank || rank === '') rank = '0';
+
+        // Determine status from time or rank
+        const isDQ = (time && (time.includes('DQ') || time.includes('DNF') || time.includes('DNS')))
+            || rank === 'DQ' || rank === 'DNF' || rank === 'DNS';
+        const status = isDQ ? 'DQ/DNF' : 'OK';
+
+        if (name && category) {
+            parsedResults.push({
+                rank: rank,
+                name: name,
+                country: 'USA',
+                category: category || 'Unknown',
+                time: time || 'N/A',
+                distance: distance,
+                gender: gender,
+                raceLabel: '',
+                status: status
+            });
+        }
+    }
+
+    if (parsedResults.length === 0) {
+        showStatus('error', 'No USA results found in pasted text. Make sure results contain "USA".');
+        return;
+    }
+
+    showLoading(true);
+
+    try {
+        const eventName = eventKey.replace('amcup', 'AmCup #');
+
+        // Merge with existing results for this event (if any)
+        let allResults = [];
+        if (appState.events[eventKey] && appState.events[eventKey].results) {
+            // Keep existing results but remove any for this same distance+gender (replace them)
+            allResults = appState.events[eventKey].results.filter(
+                r => !(r.distance === distance && r.gender === gender)
+            );
+        }
+        allResults = allResults.concat(parsedResults);
+
+        // Send to server for processing
+        const response = await fetch(`${API_URL}/api/process-results`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                results: allResults,
+                eventName: eventName
+            })
+        });
+
+        if (!response.ok) throw new Error('Failed to process results');
+
+        const data = await response.json();
+        appState.events[eventKey] = data;
+
+        showStatus('success', `✅ Imported ${parsedResults.length} USA results for ${gender}'s ${distance} into ${eventName}`);
+        checkCalculationReadiness();
+
+        // Clear textarea
+        document.getElementById(`paste-text-${eventKey}`).value = '';
+
+    } catch (error) {
+        console.error('Error importing pasted results:', error);
+        showStatus('error', `❌ Error importing results: ${error.message}`);
+    } finally {
+        showLoading(false);
+    }
 }
 
 // Initialize on load

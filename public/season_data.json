@@ -13254,5 +13254,2988 @@
       }
     }
   },
-  "amcup3": null
+  "amcup3": {
+    "success": true,
+    "eventName": "AmCup #3",
+    "results": [
+      {
+        "rank": "3",
+        "name": "Piper YDE",
+        "country": "USA",
+        "category": "LN2",
+        "time": "39,93",
+        "distance": "500m",
+        "gender": "women",
+        "raceLabel": "",
+        "status": "OK",
+        "categories": {
+          "overall": true,
+          "junior": false,
+          "master": false
+        }
+      },
+      {
+        "rank": "5",
+        "name": "Libby WILLIAMS",
+        "country": "USA",
+        "category": "LN2",
+        "time": "41,02",
+        "distance": "500m",
+        "gender": "women",
+        "raceLabel": "",
+        "status": "OK",
+        "categories": {
+          "overall": true,
+          "junior": false,
+          "master": false
+        }
+      },
+      {
+        "rank": "6",
+        "name": "Ilsa SHOBE",
+        "country": "USA",
+        "category": "LSA",
+        "time": "41,26",
+        "distance": "500m",
+        "gender": "women",
+        "raceLabel": "",
+        "status": "OK",
+        "categories": {
+          "overall": true,
+          "junior": false,
+          "master": false
+        }
+      },
+      {
+        "rank": "8",
+        "name": "Keeley WHITCOMB",
+        "country": "USA",
+        "category": "LA1",
+        "time": "41,70",
+        "distance": "500m",
+        "gender": "women",
+        "raceLabel": "",
+        "status": "OK",
+        "categories": {
+          "overall": true,
+          "junior": true,
+          "master": false
+        }
+      },
+      {
+        "rank": "9",
+        "name": "Ana KIMBER",
+        "country": "USA",
+        "category": "LSA",
+        "time": "41,97",
+        "distance": "500m",
+        "gender": "women",
+        "raceLabel": "",
+        "status": "OK",
+        "categories": {
+          "overall": true,
+          "junior": false,
+          "master": false
+        }
+      },
+      {
+        "rank": "12",
+        "name": "Evie FORRER",
+        "country": "USA",
+        "category": "LB2",
+        "time": "43,10",
+        "distance": "500m",
+        "gender": "women",
+        "raceLabel": "",
+        "status": "OK",
+        "categories": {
+          "overall": true,
+          "junior": true,
+          "master": false
+        }
+      },
+      {
+        "rank": "14",
+        "name": "Aileen OH",
+        "country": "USA",
+        "category": "LC2",
+        "time": "44,43",
+        "distance": "500m",
+        "gender": "women",
+        "raceLabel": "",
+        "status": "OK",
+        "categories": {
+          "overall": true,
+          "junior": true,
+          "master": false
+        }
+      },
+      {
+        "rank": "15",
+        "name": "Selena SU",
+        "country": "USA",
+        "category": "LA1",
+        "time": "44,67",
+        "distance": "500m",
+        "gender": "women",
+        "raceLabel": "",
+        "status": "OK",
+        "categories": {
+          "overall": true,
+          "junior": true,
+          "master": false
+        }
+      },
+      {
+        "rank": "16",
+        "name": "Allison LA",
+        "country": "USA",
+        "category": "LC2",
+        "time": "44,73",
+        "distance": "500m",
+        "gender": "women",
+        "raceLabel": "",
+        "status": "OK",
+        "categories": {
+          "overall": true,
+          "junior": true,
+          "master": false
+        }
+      },
+      {
+        "rank": "17",
+        "name": "Nathalie RODRIGUE-HASSELBACK",
+        "country": "USA",
+        "category": "L55",
+        "time": "45,58",
+        "distance": "500m",
+        "gender": "women",
+        "raceLabel": "",
+        "status": "OK",
+        "categories": {
+          "overall": true,
+          "junior": false,
+          "master": true
+        }
+      },
+      {
+        "rank": "18",
+        "name": "Audrey HAN",
+        "country": "USA",
+        "category": "LA1",
+        "time": "46,16",
+        "distance": "500m",
+        "gender": "women",
+        "raceLabel": "",
+        "status": "OK",
+        "categories": {
+          "overall": true,
+          "junior": true,
+          "master": false
+        }
+      },
+      {
+        "rank": "19",
+        "name": "Juliette SONG",
+        "country": "USA",
+        "category": "LC2",
+        "time": "48,19",
+        "distance": "500m",
+        "gender": "women",
+        "raceLabel": "",
+        "status": "OK",
+        "categories": {
+          "overall": true,
+          "junior": true,
+          "master": false
+        }
+      },
+      {
+        "rank": "20",
+        "name": "Sara CUSHMAN",
+        "country": "USA",
+        "category": "L50",
+        "time": "48,36",
+        "distance": "500m",
+        "gender": "women",
+        "raceLabel": "",
+        "status": "OK",
+        "categories": {
+          "overall": true,
+          "junior": false,
+          "master": true
+        }
+      },
+      {
+        "rank": "1",
+        "name": "Piper YDE",
+        "country": "USA",
+        "category": "LN2",
+        "time": "2.03,31",
+        "distance": "1500m",
+        "gender": "women",
+        "raceLabel": "",
+        "status": "OK",
+        "categories": {
+          "overall": true,
+          "junior": false,
+          "master": false
+        }
+      },
+      {
+        "rank": "3",
+        "name": "Ilsa SHOBE",
+        "country": "USA",
+        "category": "LSA",
+        "time": "2.08,47",
+        "distance": "1500m",
+        "gender": "women",
+        "raceLabel": "",
+        "status": "OK",
+        "categories": {
+          "overall": true,
+          "junior": false,
+          "master": false
+        }
+      },
+      {
+        "rank": "4",
+        "name": "Keeley WHITCOMB",
+        "country": "USA",
+        "category": "LA1",
+        "time": "2.08,79",
+        "distance": "1500m",
+        "gender": "women",
+        "raceLabel": "",
+        "status": "OK",
+        "categories": {
+          "overall": true,
+          "junior": true,
+          "master": false
+        }
+      },
+      {
+        "rank": "5",
+        "name": "Ana KIMBER",
+        "country": "USA",
+        "category": "LSA",
+        "time": "2.12,22",
+        "distance": "1500m",
+        "gender": "women",
+        "raceLabel": "",
+        "status": "OK",
+        "categories": {
+          "overall": true,
+          "junior": false,
+          "master": false
+        }
+      },
+      {
+        "rank": "8",
+        "name": "Evie FORRER",
+        "country": "USA",
+        "category": "LB2",
+        "time": "2.15,97",
+        "distance": "1500m",
+        "gender": "women",
+        "raceLabel": "",
+        "status": "OK",
+        "categories": {
+          "overall": true,
+          "junior": true,
+          "master": false
+        }
+      },
+      {
+        "rank": "9",
+        "name": "Selena SU",
+        "country": "USA",
+        "category": "LA1",
+        "time": "2.17,25",
+        "distance": "1500m",
+        "gender": "women",
+        "raceLabel": "",
+        "status": "OK",
+        "categories": {
+          "overall": true,
+          "junior": true,
+          "master": false
+        }
+      },
+      {
+        "rank": "10",
+        "name": "Aileen OH",
+        "country": "USA",
+        "category": "LC2",
+        "time": "2.19,10",
+        "distance": "1500m",
+        "gender": "women",
+        "raceLabel": "",
+        "status": "OK",
+        "categories": {
+          "overall": true,
+          "junior": true,
+          "master": false
+        }
+      },
+      {
+        "rank": "11",
+        "name": "Nathalie RODRIGUE-HASSELBACK",
+        "country": "USA",
+        "category": "L55",
+        "time": "2.23,84",
+        "distance": "1500m",
+        "gender": "women",
+        "raceLabel": "",
+        "status": "OK",
+        "categories": {
+          "overall": true,
+          "junior": false,
+          "master": true
+        }
+      },
+      {
+        "rank": "12",
+        "name": "Audrey HAN",
+        "country": "USA",
+        "category": "LA1",
+        "time": "2.24,35",
+        "distance": "1500m",
+        "gender": "women",
+        "raceLabel": "",
+        "status": "OK",
+        "categories": {
+          "overall": true,
+          "junior": true,
+          "master": false
+        }
+      },
+      {
+        "rank": "13",
+        "name": "Sara CUSHMAN",
+        "country": "USA",
+        "category": "L50",
+        "time": "2.25,47",
+        "distance": "1500m",
+        "gender": "women",
+        "raceLabel": "",
+        "status": "OK",
+        "categories": {
+          "overall": true,
+          "junior": false,
+          "master": true
+        }
+      },
+      {
+        "rank": "14",
+        "name": "Allison LA",
+        "country": "USA",
+        "category": "LC2",
+        "time": "2.26,07",
+        "distance": "1500m",
+        "gender": "women",
+        "raceLabel": "",
+        "status": "OK",
+        "categories": {
+          "overall": true,
+          "junior": true,
+          "master": false
+        }
+      },
+      {
+        "rank": "15",
+        "name": "Juliette SONG",
+        "country": "USA",
+        "category": "LC2",
+        "time": "2.27,45",
+        "distance": "1500m",
+        "gender": "women",
+        "raceLabel": "",
+        "status": "OK",
+        "categories": {
+          "overall": true,
+          "junior": true,
+          "master": false
+        }
+      },
+      {
+        "rank": "3",
+        "name": "Auggie HERMAN",
+        "country": "USA",
+        "category": "MN3",
+        "time": "36,22(2)",
+        "distance": "500m",
+        "gender": "men",
+        "raceLabel": "",
+        "status": "OK",
+        "categories": {
+          "overall": true,
+          "junior": false,
+          "master": false
+        }
+      },
+      {
+        "rank": "5",
+        "name": "George WHEELOCK",
+        "country": "USA",
+        "category": "MSA",
+        "time": "37,01",
+        "distance": "500m",
+        "gender": "men",
+        "raceLabel": "",
+        "status": "OK",
+        "categories": {
+          "overall": true,
+          "junior": false,
+          "master": false
+        }
+      },
+      {
+        "rank": "6",
+        "name": "Herbert HARBISON",
+        "country": "USA",
+        "category": "MSA",
+        "time": "37,11",
+        "distance": "500m",
+        "gender": "men",
+        "raceLabel": "",
+        "status": "OK",
+        "categories": {
+          "overall": true,
+          "junior": false,
+          "master": false
+        }
+      },
+      {
+        "rank": "7",
+        "name": "Zachary JENSEN",
+        "country": "USA",
+        "category": "MN2",
+        "time": "37,13",
+        "distance": "500m",
+        "gender": "men",
+        "raceLabel": "",
+        "status": "OK",
+        "categories": {
+          "overall": true,
+          "junior": false,
+          "master": false
+        }
+      },
+      {
+        "rank": "10",
+        "name": "Maison RILEY",
+        "country": "USA",
+        "category": "MSA",
+        "time": "37,63",
+        "distance": "500m",
+        "gender": "men",
+        "raceLabel": "",
+        "status": "OK",
+        "categories": {
+          "overall": true,
+          "junior": false,
+          "master": false
+        }
+      },
+      {
+        "rank": "11",
+        "name": "Finn SIEBERT",
+        "country": "USA",
+        "category": "MA2",
+        "time": "37,73",
+        "distance": "500m",
+        "gender": "men",
+        "raceLabel": "",
+        "status": "OK",
+        "categories": {
+          "overall": true,
+          "junior": true,
+          "master": false
+        }
+      },
+      {
+        "rank": "12",
+        "name": "William SILK",
+        "country": "USA",
+        "category": "MN1",
+        "time": "37,85",
+        "distance": "500m",
+        "gender": "men",
+        "raceLabel": "",
+        "status": "OK",
+        "categories": {
+          "overall": true,
+          "junior": false,
+          "master": false
+        }
+      },
+      {
+        "rank": "13",
+        "name": "David PROVOD",
+        "country": "USA",
+        "category": "MB1",
+        "time": "37,99",
+        "distance": "500m",
+        "gender": "men",
+        "raceLabel": "",
+        "status": "OK",
+        "categories": {
+          "overall": true,
+          "junior": true,
+          "master": false
+        }
+      },
+      {
+        "rank": "14",
+        "name": "Matthew SALM",
+        "country": "USA",
+        "category": "M30",
+        "time": "38,03",
+        "distance": "500m",
+        "gender": "men",
+        "raceLabel": "",
+        "status": "OK",
+        "categories": {
+          "overall": true,
+          "junior": false,
+          "master": true
+        }
+      },
+      {
+        "rank": "15",
+        "name": "Samuel HART-GORMAN",
+        "country": "USA",
+        "category": "MN1",
+        "time": "38,34",
+        "distance": "500m",
+        "gender": "men",
+        "raceLabel": "",
+        "status": "OK",
+        "categories": {
+          "overall": true,
+          "junior": false,
+          "master": false
+        }
+      },
+      {
+        "rank": "16",
+        "name": "Riley MARTIN",
+        "country": "USA",
+        "category": "MSA",
+        "time": "38,41",
+        "distance": "500m",
+        "gender": "men",
+        "raceLabel": "",
+        "status": "OK",
+        "categories": {
+          "overall": true,
+          "junior": false,
+          "master": false
+        }
+      },
+      {
+        "rank": "17",
+        "name": "Colin LEE",
+        "country": "USA",
+        "category": "MC2",
+        "time": "38,53",
+        "distance": "500m",
+        "gender": "men",
+        "raceLabel": "",
+        "status": "OK",
+        "categories": {
+          "overall": true,
+          "junior": true,
+          "master": false
+        }
+      },
+      {
+        "rank": "18",
+        "name": "Kieran COLLINS",
+        "country": "USA",
+        "category": "MB2",
+        "time": "38,60",
+        "distance": "500m",
+        "gender": "men",
+        "raceLabel": "",
+        "status": "OK",
+        "categories": {
+          "overall": true,
+          "junior": true,
+          "master": false
+        }
+      },
+      {
+        "rank": "19",
+        "name": "Anson QUINN",
+        "country": "USA",
+        "category": "MA2",
+        "time": "38,62",
+        "distance": "500m",
+        "gender": "men",
+        "raceLabel": "",
+        "status": "OK",
+        "categories": {
+          "overall": true,
+          "junior": true,
+          "master": false
+        }
+      },
+      {
+        "rank": "20",
+        "name": "Michael HUBBS",
+        "country": "USA",
+        "category": "M40",
+        "time": "38,73",
+        "distance": "500m",
+        "gender": "men",
+        "raceLabel": "",
+        "status": "OK",
+        "categories": {
+          "overall": true,
+          "junior": false,
+          "master": true
+        }
+      },
+      {
+        "rank": "21",
+        "name": "Kelin DUNFEE",
+        "country": "USA",
+        "category": "M35",
+        "time": "39,11",
+        "distance": "500m",
+        "gender": "men",
+        "raceLabel": "",
+        "status": "OK",
+        "categories": {
+          "overall": true,
+          "junior": false,
+          "master": true
+        }
+      },
+      {
+        "rank": "24",
+        "name": "Gavin ORD",
+        "country": "USA",
+        "category": "MA2",
+        "time": "39,39",
+        "distance": "500m",
+        "gender": "men",
+        "raceLabel": "",
+        "status": "OK",
+        "categories": {
+          "overall": true,
+          "junior": true,
+          "master": false
+        }
+      },
+      {
+        "rank": "25",
+        "name": "Henry SCHLICHTING",
+        "country": "USA",
+        "category": "MB2",
+        "time": "39,46",
+        "distance": "500m",
+        "gender": "men",
+        "raceLabel": "",
+        "status": "OK",
+        "categories": {
+          "overall": true,
+          "junior": true,
+          "master": false
+        }
+      },
+      {
+        "rank": "26",
+        "name": "Edward NAGEL",
+        "country": "USA",
+        "category": "MA2",
+        "time": "39,48",
+        "distance": "500m",
+        "gender": "men",
+        "raceLabel": "",
+        "status": "OK",
+        "categories": {
+          "overall": true,
+          "junior": true,
+          "master": false
+        }
+      },
+      {
+        "rank": "27",
+        "name": "Sebastien EPPERSON",
+        "country": "USA",
+        "category": "MB1",
+        "time": "39,55",
+        "distance": "500m",
+        "gender": "men",
+        "raceLabel": "",
+        "status": "OK",
+        "categories": {
+          "overall": true,
+          "junior": true,
+          "master": false
+        }
+      },
+      {
+        "rank": "28",
+        "name": "Tariq ELATTAOUI",
+        "country": "USA",
+        "category": "MC2",
+        "time": "39,57",
+        "distance": "500m",
+        "gender": "men",
+        "raceLabel": "",
+        "status": "OK",
+        "categories": {
+          "overall": true,
+          "junior": true,
+          "master": false
+        }
+      },
+      {
+        "rank": "29",
+        "name": "Thomas PIERCE",
+        "country": "USA",
+        "category": "MSA",
+        "time": "39,86",
+        "distance": "500m",
+        "gender": "men",
+        "raceLabel": "",
+        "status": "OK",
+        "categories": {
+          "overall": true,
+          "junior": false,
+          "master": false
+        }
+      },
+      {
+        "rank": "30",
+        "name": "Matthew KUROWSKI",
+        "country": "USA",
+        "category": "MA1",
+        "time": "39,92",
+        "distance": "500m",
+        "gender": "men",
+        "raceLabel": "",
+        "status": "OK",
+        "categories": {
+          "overall": true,
+          "junior": true,
+          "master": false
+        }
+      },
+      {
+        "rank": "31",
+        "name": "Jayden OH",
+        "country": "USA",
+        "category": "MB1",
+        "time": "40,37",
+        "distance": "500m",
+        "gender": "men",
+        "raceLabel": "",
+        "status": "OK",
+        "categories": {
+          "overall": true,
+          "junior": true,
+          "master": false
+        }
+      },
+      {
+        "rank": "32",
+        "name": "Roman HASTINGS",
+        "country": "USA",
+        "category": "MB1",
+        "time": "40,53",
+        "distance": "500m",
+        "gender": "men",
+        "raceLabel": "",
+        "status": "OK",
+        "categories": {
+          "overall": true,
+          "junior": true,
+          "master": false
+        }
+      },
+      {
+        "rank": "34",
+        "name": "Uel ARCHULETTA",
+        "country": "USA",
+        "category": "M55",
+        "time": "40,62",
+        "distance": "500m",
+        "gender": "men",
+        "raceLabel": "",
+        "status": "OK",
+        "categories": {
+          "overall": true,
+          "junior": false,
+          "master": true
+        }
+      },
+      {
+        "rank": "35",
+        "name": "Kevin FEATHERSTONE",
+        "country": "USA",
+        "category": "M40",
+        "time": "41,62",
+        "distance": "500m",
+        "gender": "men",
+        "raceLabel": "",
+        "status": "OK",
+        "categories": {
+          "overall": true,
+          "junior": false,
+          "master": true
+        }
+      },
+      {
+        "rank": "36",
+        "name": "Kyle ESSEX",
+        "country": "USA",
+        "category": "M30",
+        "time": "41,89",
+        "distance": "500m",
+        "gender": "men",
+        "raceLabel": "",
+        "status": "OK",
+        "categories": {
+          "overall": true,
+          "junior": false,
+          "master": true
+        }
+      },
+      {
+        "rank": "37",
+        "name": "Dawson PRICE",
+        "country": "USA",
+        "category": "MSA",
+        "time": "42,50",
+        "distance": "500m",
+        "gender": "men",
+        "raceLabel": "",
+        "status": "OK",
+        "categories": {
+          "overall": true,
+          "junior": false,
+          "master": false
+        }
+      },
+      {
+        "rank": "38",
+        "name": "Nickolas DE BOCK",
+        "country": "USA",
+        "category": "MC1",
+        "time": "42,75",
+        "distance": "500m",
+        "gender": "men",
+        "raceLabel": "",
+        "status": "OK",
+        "categories": {
+          "overall": true,
+          "junior": true,
+          "master": false
+        }
+      },
+      {
+        "rank": "39",
+        "name": "Paul GOOD",
+        "country": "USA",
+        "category": "M45",
+        "time": "42,87",
+        "distance": "500m",
+        "gender": "men",
+        "raceLabel": "",
+        "status": "OK",
+        "categories": {
+          "overall": true,
+          "junior": false,
+          "master": true
+        }
+      },
+      {
+        "rank": "40",
+        "name": "Jeff TERWILLIGER",
+        "country": "USA",
+        "category": "M65",
+        "time": "43,54",
+        "distance": "500m",
+        "gender": "men",
+        "raceLabel": "",
+        "status": "OK",
+        "categories": {
+          "overall": true,
+          "junior": false,
+          "master": true
+        }
+      },
+      {
+        "rank": "41",
+        "name": "Kyler DE GROOT",
+        "country": "USA",
+        "category": "MB2",
+        "time": "43,62",
+        "distance": "500m",
+        "gender": "men",
+        "raceLabel": "",
+        "status": "OK",
+        "categories": {
+          "overall": true,
+          "junior": true,
+          "master": false
+        }
+      },
+      {
+        "rank": "42",
+        "name": "Tyler LEE",
+        "country": "USA",
+        "category": "M35",
+        "time": "43,93",
+        "distance": "500m",
+        "gender": "men",
+        "raceLabel": "",
+        "status": "OK",
+        "categories": {
+          "overall": true,
+          "junior": false,
+          "master": true
+        }
+      },
+      {
+        "rank": "43",
+        "name": "Matthew TRIMBLE",
+        "country": "USA",
+        "category": "M65",
+        "time": "44,18",
+        "distance": "500m",
+        "gender": "men",
+        "raceLabel": "",
+        "status": "OK",
+        "categories": {
+          "overall": true,
+          "junior": false,
+          "master": true
+        }
+      },
+      {
+        "rank": "44",
+        "name": "Joshua KRIETER",
+        "country": "USA",
+        "category": "M35",
+        "time": "45,20",
+        "distance": "500m",
+        "gender": "men",
+        "raceLabel": "",
+        "status": "OK",
+        "categories": {
+          "overall": true,
+          "junior": false,
+          "master": true
+        }
+      },
+      {
+        "rank": "45",
+        "name": "Keith WOBESER",
+        "country": "USA",
+        "category": "M55",
+        "time": "45,60",
+        "distance": "500m",
+        "gender": "men",
+        "raceLabel": "",
+        "status": "OK",
+        "categories": {
+          "overall": true,
+          "junior": false,
+          "master": true
+        }
+      },
+      {
+        "rank": "46",
+        "name": "Daniel GREENE",
+        "country": "USA",
+        "category": "M60",
+        "time": "50,49",
+        "distance": "500m",
+        "gender": "men",
+        "raceLabel": "",
+        "status": "OK",
+        "categories": {
+          "overall": true,
+          "junior": false,
+          "master": true
+        }
+      },
+      {
+        "rank": "47",
+        "name": "Gary GROEN",
+        "country": "USA",
+        "category": "M75",
+        "time": "1.01,61",
+        "distance": "500m",
+        "gender": "men",
+        "raceLabel": "",
+        "status": "OK",
+        "categories": {
+          "overall": true,
+          "junior": false,
+          "master": true
+        }
+      },
+      {
+        "rank": "DQ",
+        "name": "David HURST",
+        "country": "USA",
+        "category": "M35",
+        "time": "DQ",
+        "distance": "500m",
+        "gender": "men",
+        "raceLabel": "",
+        "status": "DQ/DNF",
+        "categories": {
+          "overall": true,
+          "junior": false,
+          "master": true
+        }
+      },
+      {
+        "rank": "1",
+        "name": "Kyle ESSEX",
+        "country": "USA",
+        "category": "M30",
+        "time": "2.14,12",
+        "distance": "1500m",
+        "gender": "men",
+        "raceLabel": "",
+        "status": "OK",
+        "categories": {
+          "overall": true,
+          "junior": false,
+          "master": true
+        }
+      },
+      {
+        "rank": "2",
+        "name": "Jeff TERWILLIGER",
+        "country": "USA",
+        "category": "M65",
+        "time": "2.14,46",
+        "distance": "1500m",
+        "gender": "men",
+        "raceLabel": "",
+        "status": "OK",
+        "categories": {
+          "overall": true,
+          "junior": false,
+          "master": true
+        }
+      },
+      {
+        "rank": "3",
+        "name": "Joshua KRIETER",
+        "country": "USA",
+        "category": "M35",
+        "time": "2.22,84",
+        "distance": "1500m",
+        "gender": "men",
+        "raceLabel": "",
+        "status": "OK",
+        "categories": {
+          "overall": true,
+          "junior": false,
+          "master": true
+        }
+      },
+      {
+        "rank": "4",
+        "name": "Daniel GREENE",
+        "country": "USA",
+        "category": "M60",
+        "time": "2.36,51",
+        "distance": "1500m",
+        "gender": "men",
+        "raceLabel": "",
+        "status": "OK",
+        "categories": {
+          "overall": true,
+          "junior": false,
+          "master": true
+        }
+      },
+      {
+        "rank": "5",
+        "name": "David HURST",
+        "country": "USA",
+        "category": "M35",
+        "time": "2.46,87",
+        "distance": "1500m",
+        "gender": "men",
+        "raceLabel": "",
+        "status": "OK",
+        "categories": {
+          "overall": true,
+          "junior": false,
+          "master": true
+        }
+      },
+      {
+        "rank": "6",
+        "name": "Gary GROEN",
+        "country": "USA",
+        "category": "M75",
+        "time": "3.21,23",
+        "distance": "1500m",
+        "gender": "men",
+        "raceLabel": "",
+        "status": "OK",
+        "categories": {
+          "overall": true,
+          "junior": false,
+          "master": true
+        }
+      }
+    ],
+    "standings": {
+      "overall": {
+        "Piper YDE": {
+          "name": "Piper YDE",
+          "category": "LN2",
+          "distances": {
+            "500m": {
+              "AmCup #3": 60
+            },
+            "1500m": {
+              "AmCup #3": 60
+            }
+          },
+          "totalPoints": 120
+        },
+        "Libby WILLIAMS": {
+          "name": "Libby WILLIAMS",
+          "category": "LN2",
+          "distances": {
+            "500m": {
+              "AmCup #3": 54
+            }
+          },
+          "totalPoints": 54
+        },
+        "Ilsa SHOBE": {
+          "name": "Ilsa SHOBE",
+          "category": "LSA",
+          "distances": {
+            "500m": {
+              "AmCup #3": 48
+            },
+            "1500m": {
+              "AmCup #3": 54
+            }
+          },
+          "totalPoints": 102
+        },
+        "Keeley WHITCOMB": {
+          "name": "Keeley WHITCOMB",
+          "category": "LA1",
+          "distances": {
+            "500m": {
+              "AmCup #3": 43
+            },
+            "1500m": {
+              "AmCup #3": 48
+            }
+          },
+          "totalPoints": 91
+        },
+        "Ana KIMBER": {
+          "name": "Ana KIMBER",
+          "category": "LSA",
+          "distances": {
+            "500m": {
+              "AmCup #3": 40
+            },
+            "1500m": {
+              "AmCup #3": 43
+            }
+          },
+          "totalPoints": 83
+        },
+        "Evie FORRER": {
+          "name": "Evie FORRER",
+          "category": "LB2",
+          "distances": {
+            "500m": {
+              "AmCup #3": 37
+            },
+            "1500m": {
+              "AmCup #3": 40
+            }
+          },
+          "totalPoints": 77
+        },
+        "Aileen OH": {
+          "name": "Aileen OH",
+          "category": "LC2",
+          "distances": {
+            "500m": {
+              "AmCup #3": 34
+            },
+            "1500m": {
+              "AmCup #3": 34
+            }
+          },
+          "totalPoints": 68
+        },
+        "Selena SU": {
+          "name": "Selena SU",
+          "category": "LA1",
+          "distances": {
+            "500m": {
+              "AmCup #3": 32
+            },
+            "1500m": {
+              "AmCup #3": 37
+            }
+          },
+          "totalPoints": 69
+        },
+        "Allison LA": {
+          "name": "Allison LA",
+          "category": "LC2",
+          "distances": {
+            "500m": {
+              "AmCup #3": 30
+            },
+            "1500m": {
+              "AmCup #3": 27
+            }
+          },
+          "totalPoints": 57
+        },
+        "Nathalie RODRIGUE-HASSELBACK": {
+          "name": "Nathalie RODRIGUE-HASSELBACK",
+          "category": "L55",
+          "distances": {
+            "500m": {
+              "AmCup #3": 28
+            },
+            "1500m": {
+              "AmCup #3": 32
+            }
+          },
+          "totalPoints": 60
+        },
+        "Audrey HAN": {
+          "name": "Audrey HAN",
+          "category": "LA1",
+          "distances": {
+            "500m": {
+              "AmCup #3": 27
+            },
+            "1500m": {
+              "AmCup #3": 30
+            }
+          },
+          "totalPoints": 57
+        },
+        "Juliette SONG": {
+          "name": "Juliette SONG",
+          "category": "LC2",
+          "distances": {
+            "500m": {
+              "AmCup #3": 26
+            },
+            "1500m": {
+              "AmCup #3": 26
+            }
+          },
+          "totalPoints": 52
+        },
+        "Sara CUSHMAN": {
+          "name": "Sara CUSHMAN",
+          "category": "L50",
+          "distances": {
+            "500m": {
+              "AmCup #3": 25
+            },
+            "1500m": {
+              "AmCup #3": 28
+            }
+          },
+          "totalPoints": 53
+        },
+        "Auggie HERMAN": {
+          "name": "Auggie HERMAN",
+          "category": "MN3",
+          "distances": {
+            "500m": {
+              "AmCup #3": 60
+            }
+          },
+          "totalPoints": 60
+        },
+        "George WHEELOCK": {
+          "name": "George WHEELOCK",
+          "category": "MSA",
+          "distances": {
+            "500m": {
+              "AmCup #3": 54
+            }
+          },
+          "totalPoints": 54
+        },
+        "Herbert HARBISON": {
+          "name": "Herbert HARBISON",
+          "category": "MSA",
+          "distances": {
+            "500m": {
+              "AmCup #3": 48
+            }
+          },
+          "totalPoints": 48
+        },
+        "Zachary JENSEN": {
+          "name": "Zachary JENSEN",
+          "category": "MN2",
+          "distances": {
+            "500m": {
+              "AmCup #3": 43
+            }
+          },
+          "totalPoints": 43
+        },
+        "Maison RILEY": {
+          "name": "Maison RILEY",
+          "category": "MSA",
+          "distances": {
+            "500m": {
+              "AmCup #3": 40
+            }
+          },
+          "totalPoints": 40
+        },
+        "Finn SIEBERT": {
+          "name": "Finn SIEBERT",
+          "category": "MA2",
+          "distances": {
+            "500m": {
+              "AmCup #3": 37
+            }
+          },
+          "totalPoints": 37
+        },
+        "William SILK": {
+          "name": "William SILK",
+          "category": "MN1",
+          "distances": {
+            "500m": {
+              "AmCup #3": 34
+            }
+          },
+          "totalPoints": 34
+        },
+        "David PROVOD": {
+          "name": "David PROVOD",
+          "category": "MB1",
+          "distances": {
+            "500m": {
+              "AmCup #3": 32
+            }
+          },
+          "totalPoints": 32
+        },
+        "Matthew SALM": {
+          "name": "Matthew SALM",
+          "category": "M30",
+          "distances": {
+            "500m": {
+              "AmCup #3": 30
+            }
+          },
+          "totalPoints": 30
+        },
+        "Samuel HART-GORMAN": {
+          "name": "Samuel HART-GORMAN",
+          "category": "MN1",
+          "distances": {
+            "500m": {
+              "AmCup #3": 28
+            }
+          },
+          "totalPoints": 28
+        },
+        "Riley MARTIN": {
+          "name": "Riley MARTIN",
+          "category": "MSA",
+          "distances": {
+            "500m": {
+              "AmCup #3": 27
+            }
+          },
+          "totalPoints": 27
+        },
+        "Colin LEE": {
+          "name": "Colin LEE",
+          "category": "MC2",
+          "distances": {
+            "500m": {
+              "AmCup #3": 26
+            }
+          },
+          "totalPoints": 26
+        },
+        "Kieran COLLINS": {
+          "name": "Kieran COLLINS",
+          "category": "MB2",
+          "distances": {
+            "500m": {
+              "AmCup #3": 25
+            }
+          },
+          "totalPoints": 25
+        },
+        "Anson QUINN": {
+          "name": "Anson QUINN",
+          "category": "MA2",
+          "distances": {
+            "500m": {
+              "AmCup #3": 24
+            }
+          },
+          "totalPoints": 24
+        },
+        "Michael HUBBS": {
+          "name": "Michael HUBBS",
+          "category": "M40",
+          "distances": {
+            "500m": {
+              "AmCup #3": 23
+            }
+          },
+          "totalPoints": 23
+        },
+        "Kelin DUNFEE": {
+          "name": "Kelin DUNFEE",
+          "category": "M35",
+          "distances": {
+            "500m": {
+              "AmCup #3": 22
+            }
+          },
+          "totalPoints": 22
+        },
+        "Gavin ORD": {
+          "name": "Gavin ORD",
+          "category": "MA2",
+          "distances": {
+            "500m": {
+              "AmCup #3": 21
+            }
+          },
+          "totalPoints": 21
+        },
+        "Henry SCHLICHTING": {
+          "name": "Henry SCHLICHTING",
+          "category": "MB2",
+          "distances": {
+            "500m": {
+              "AmCup #3": 20
+            }
+          },
+          "totalPoints": 20
+        },
+        "Edward NAGEL": {
+          "name": "Edward NAGEL",
+          "category": "MA2",
+          "distances": {
+            "500m": {
+              "AmCup #3": 19
+            }
+          },
+          "totalPoints": 19
+        },
+        "Sebastien EPPERSON": {
+          "name": "Sebastien EPPERSON",
+          "category": "MB1",
+          "distances": {
+            "500m": {
+              "AmCup #3": 18
+            }
+          },
+          "totalPoints": 18
+        },
+        "Tariq ELATTAOUI": {
+          "name": "Tariq ELATTAOUI",
+          "category": "MC2",
+          "distances": {
+            "500m": {
+              "AmCup #3": 17
+            }
+          },
+          "totalPoints": 17
+        },
+        "Thomas PIERCE": {
+          "name": "Thomas PIERCE",
+          "category": "MSA",
+          "distances": {
+            "500m": {
+              "AmCup #3": 16
+            }
+          },
+          "totalPoints": 16
+        },
+        "Matthew KUROWSKI": {
+          "name": "Matthew KUROWSKI",
+          "category": "MA1",
+          "distances": {
+            "500m": {
+              "AmCup #3": 15
+            }
+          },
+          "totalPoints": 15
+        },
+        "Jayden OH": {
+          "name": "Jayden OH",
+          "category": "MB1",
+          "distances": {
+            "500m": {
+              "AmCup #3": 14
+            }
+          },
+          "totalPoints": 14
+        },
+        "Roman HASTINGS": {
+          "name": "Roman HASTINGS",
+          "category": "MB1",
+          "distances": {
+            "500m": {
+              "AmCup #3": 13
+            }
+          },
+          "totalPoints": 13
+        },
+        "Uel ARCHULETTA": {
+          "name": "Uel ARCHULETTA",
+          "category": "M55",
+          "distances": {
+            "500m": {
+              "AmCup #3": 12
+            }
+          },
+          "totalPoints": 12
+        },
+        "Kevin FEATHERSTONE": {
+          "name": "Kevin FEATHERSTONE",
+          "category": "M40",
+          "distances": {
+            "500m": {
+              "AmCup #3": 11
+            }
+          },
+          "totalPoints": 11
+        },
+        "Kyle ESSEX": {
+          "name": "Kyle ESSEX",
+          "category": "M30",
+          "distances": {
+            "500m": {
+              "AmCup #3": 10
+            },
+            "1500m": {
+              "AmCup #3": 60
+            }
+          },
+          "totalPoints": 70
+        },
+        "Dawson PRICE": {
+          "name": "Dawson PRICE",
+          "category": "MSA",
+          "distances": {
+            "500m": {
+              "AmCup #3": 9
+            }
+          },
+          "totalPoints": 9
+        },
+        "Nickolas DE BOCK": {
+          "name": "Nickolas DE BOCK",
+          "category": "MC1",
+          "distances": {
+            "500m": {
+              "AmCup #3": 8
+            }
+          },
+          "totalPoints": 8
+        },
+        "Paul GOOD": {
+          "name": "Paul GOOD",
+          "category": "M45",
+          "distances": {
+            "500m": {
+              "AmCup #3": 7
+            }
+          },
+          "totalPoints": 7
+        },
+        "Jeff TERWILLIGER": {
+          "name": "Jeff TERWILLIGER",
+          "category": "M65",
+          "distances": {
+            "500m": {
+              "AmCup #3": 6
+            },
+            "1500m": {
+              "AmCup #3": 54
+            }
+          },
+          "totalPoints": 60
+        },
+        "Kyler DE GROOT": {
+          "name": "Kyler DE GROOT",
+          "category": "MB2",
+          "distances": {
+            "500m": {
+              "AmCup #3": 5
+            }
+          },
+          "totalPoints": 5
+        },
+        "Tyler LEE": {
+          "name": "Tyler LEE",
+          "category": "M35",
+          "distances": {
+            "500m": {
+              "AmCup #3": 4
+            }
+          },
+          "totalPoints": 4
+        },
+        "Matthew TRIMBLE": {
+          "name": "Matthew TRIMBLE",
+          "category": "M65",
+          "distances": {
+            "500m": {
+              "AmCup #3": 3
+            }
+          },
+          "totalPoints": 3
+        },
+        "Joshua KRIETER": {
+          "name": "Joshua KRIETER",
+          "category": "M35",
+          "distances": {
+            "500m": {
+              "AmCup #3": 2
+            },
+            "1500m": {
+              "AmCup #3": 48
+            }
+          },
+          "totalPoints": 50
+        },
+        "Keith WOBESER": {
+          "name": "Keith WOBESER",
+          "category": "M55",
+          "distances": {
+            "500m": {
+              "AmCup #3": 1
+            }
+          },
+          "totalPoints": 1
+        },
+        "Daniel GREENE": {
+          "name": "Daniel GREENE",
+          "category": "M60",
+          "distances": {
+            "500m": {
+              "AmCup #3": 1
+            },
+            "1500m": {
+              "AmCup #3": 43
+            }
+          },
+          "totalPoints": 44
+        },
+        "Gary GROEN": {
+          "name": "Gary GROEN",
+          "category": "M75",
+          "distances": {
+            "500m": {
+              "AmCup #3": 1
+            },
+            "1500m": {
+              "AmCup #3": 37
+            }
+          },
+          "totalPoints": 38
+        },
+        "David HURST": {
+          "name": "David HURST",
+          "category": "M35",
+          "distances": {
+            "500m": {
+              "AmCup #3": 1
+            },
+            "1500m": {
+              "AmCup #3": 40
+            }
+          },
+          "totalPoints": 41
+        }
+      },
+      "junior": {
+        "Keeley WHITCOMB": {
+          "name": "Keeley WHITCOMB",
+          "category": "LA1",
+          "distances": {
+            "500m": {
+              "AmCup #3": 60
+            },
+            "1500m": {
+              "AmCup #3": 60
+            }
+          },
+          "totalPoints": 120
+        },
+        "Evie FORRER": {
+          "name": "Evie FORRER",
+          "category": "LB2",
+          "distances": {
+            "500m": {
+              "AmCup #3": 54
+            },
+            "1500m": {
+              "AmCup #3": 54
+            }
+          },
+          "totalPoints": 108
+        },
+        "Aileen OH": {
+          "name": "Aileen OH",
+          "category": "LC2",
+          "distances": {
+            "500m": {
+              "AmCup #3": 48
+            },
+            "1500m": {
+              "AmCup #3": 43
+            }
+          },
+          "totalPoints": 91
+        },
+        "Selena SU": {
+          "name": "Selena SU",
+          "category": "LA1",
+          "distances": {
+            "500m": {
+              "AmCup #3": 43
+            },
+            "1500m": {
+              "AmCup #3": 48
+            }
+          },
+          "totalPoints": 91
+        },
+        "Allison LA": {
+          "name": "Allison LA",
+          "category": "LC2",
+          "distances": {
+            "500m": {
+              "AmCup #3": 40
+            },
+            "1500m": {
+              "AmCup #3": 37
+            }
+          },
+          "totalPoints": 77
+        },
+        "Audrey HAN": {
+          "name": "Audrey HAN",
+          "category": "LA1",
+          "distances": {
+            "500m": {
+              "AmCup #3": 37
+            },
+            "1500m": {
+              "AmCup #3": 40
+            }
+          },
+          "totalPoints": 77
+        },
+        "Juliette SONG": {
+          "name": "Juliette SONG",
+          "category": "LC2",
+          "distances": {
+            "500m": {
+              "AmCup #3": 34
+            },
+            "1500m": {
+              "AmCup #3": 34
+            }
+          },
+          "totalPoints": 68
+        },
+        "Finn SIEBERT": {
+          "name": "Finn SIEBERT",
+          "category": "MA2",
+          "distances": {
+            "500m": {
+              "AmCup #3": 60
+            }
+          },
+          "totalPoints": 60
+        },
+        "David PROVOD": {
+          "name": "David PROVOD",
+          "category": "MB1",
+          "distances": {
+            "500m": {
+              "AmCup #3": 54
+            }
+          },
+          "totalPoints": 54
+        },
+        "Colin LEE": {
+          "name": "Colin LEE",
+          "category": "MC2",
+          "distances": {
+            "500m": {
+              "AmCup #3": 48
+            }
+          },
+          "totalPoints": 48
+        },
+        "Kieran COLLINS": {
+          "name": "Kieran COLLINS",
+          "category": "MB2",
+          "distances": {
+            "500m": {
+              "AmCup #3": 43
+            }
+          },
+          "totalPoints": 43
+        },
+        "Anson QUINN": {
+          "name": "Anson QUINN",
+          "category": "MA2",
+          "distances": {
+            "500m": {
+              "AmCup #3": 40
+            }
+          },
+          "totalPoints": 40
+        },
+        "Gavin ORD": {
+          "name": "Gavin ORD",
+          "category": "MA2",
+          "distances": {
+            "500m": {
+              "AmCup #3": 37
+            }
+          },
+          "totalPoints": 37
+        },
+        "Henry SCHLICHTING": {
+          "name": "Henry SCHLICHTING",
+          "category": "MB2",
+          "distances": {
+            "500m": {
+              "AmCup #3": 34
+            }
+          },
+          "totalPoints": 34
+        },
+        "Edward NAGEL": {
+          "name": "Edward NAGEL",
+          "category": "MA2",
+          "distances": {
+            "500m": {
+              "AmCup #3": 32
+            }
+          },
+          "totalPoints": 32
+        },
+        "Sebastien EPPERSON": {
+          "name": "Sebastien EPPERSON",
+          "category": "MB1",
+          "distances": {
+            "500m": {
+              "AmCup #3": 30
+            }
+          },
+          "totalPoints": 30
+        },
+        "Tariq ELATTAOUI": {
+          "name": "Tariq ELATTAOUI",
+          "category": "MC2",
+          "distances": {
+            "500m": {
+              "AmCup #3": 28
+            }
+          },
+          "totalPoints": 28
+        },
+        "Matthew KUROWSKI": {
+          "name": "Matthew KUROWSKI",
+          "category": "MA1",
+          "distances": {
+            "500m": {
+              "AmCup #3": 27
+            }
+          },
+          "totalPoints": 27
+        },
+        "Jayden OH": {
+          "name": "Jayden OH",
+          "category": "MB1",
+          "distances": {
+            "500m": {
+              "AmCup #3": 26
+            }
+          },
+          "totalPoints": 26
+        },
+        "Roman HASTINGS": {
+          "name": "Roman HASTINGS",
+          "category": "MB1",
+          "distances": {
+            "500m": {
+              "AmCup #3": 25
+            }
+          },
+          "totalPoints": 25
+        },
+        "Nickolas DE BOCK": {
+          "name": "Nickolas DE BOCK",
+          "category": "MC1",
+          "distances": {
+            "500m": {
+              "AmCup #3": 24
+            }
+          },
+          "totalPoints": 24
+        },
+        "Kyler DE GROOT": {
+          "name": "Kyler DE GROOT",
+          "category": "MB2",
+          "distances": {
+            "500m": {
+              "AmCup #3": 23
+            }
+          },
+          "totalPoints": 23
+        }
+      },
+      "master": {
+        "Nathalie RODRIGUE-HASSELBACK": {
+          "name": "Nathalie RODRIGUE-HASSELBACK",
+          "category": "L55",
+          "distances": {
+            "500m": {
+              "AmCup #3": 60
+            },
+            "1500m": {
+              "AmCup #3": 60
+            }
+          },
+          "totalPoints": 120
+        },
+        "Sara CUSHMAN": {
+          "name": "Sara CUSHMAN",
+          "category": "L50",
+          "distances": {
+            "500m": {
+              "AmCup #3": 54
+            },
+            "1500m": {
+              "AmCup #3": 54
+            }
+          },
+          "totalPoints": 108
+        },
+        "Matthew SALM": {
+          "name": "Matthew SALM",
+          "category": "M30",
+          "distances": {
+            "500m": {
+              "AmCup #3": 60
+            }
+          },
+          "totalPoints": 60
+        },
+        "Michael HUBBS": {
+          "name": "Michael HUBBS",
+          "category": "M40",
+          "distances": {
+            "500m": {
+              "AmCup #3": 54
+            }
+          },
+          "totalPoints": 54
+        },
+        "Kelin DUNFEE": {
+          "name": "Kelin DUNFEE",
+          "category": "M35",
+          "distances": {
+            "500m": {
+              "AmCup #3": 48
+            }
+          },
+          "totalPoints": 48
+        },
+        "Uel ARCHULETTA": {
+          "name": "Uel ARCHULETTA",
+          "category": "M55",
+          "distances": {
+            "500m": {
+              "AmCup #3": 43
+            }
+          },
+          "totalPoints": 43
+        },
+        "Kevin FEATHERSTONE": {
+          "name": "Kevin FEATHERSTONE",
+          "category": "M40",
+          "distances": {
+            "500m": {
+              "AmCup #3": 40
+            }
+          },
+          "totalPoints": 40
+        },
+        "Kyle ESSEX": {
+          "name": "Kyle ESSEX",
+          "category": "M30",
+          "distances": {
+            "500m": {
+              "AmCup #3": 37
+            },
+            "1500m": {
+              "AmCup #3": 60
+            }
+          },
+          "totalPoints": 97
+        },
+        "Paul GOOD": {
+          "name": "Paul GOOD",
+          "category": "M45",
+          "distances": {
+            "500m": {
+              "AmCup #3": 34
+            }
+          },
+          "totalPoints": 34
+        },
+        "Jeff TERWILLIGER": {
+          "name": "Jeff TERWILLIGER",
+          "category": "M65",
+          "distances": {
+            "500m": {
+              "AmCup #3": 32
+            },
+            "1500m": {
+              "AmCup #3": 54
+            }
+          },
+          "totalPoints": 86
+        },
+        "Tyler LEE": {
+          "name": "Tyler LEE",
+          "category": "M35",
+          "distances": {
+            "500m": {
+              "AmCup #3": 30
+            }
+          },
+          "totalPoints": 30
+        },
+        "Matthew TRIMBLE": {
+          "name": "Matthew TRIMBLE",
+          "category": "M65",
+          "distances": {
+            "500m": {
+              "AmCup #3": 28
+            }
+          },
+          "totalPoints": 28
+        },
+        "Joshua KRIETER": {
+          "name": "Joshua KRIETER",
+          "category": "M35",
+          "distances": {
+            "500m": {
+              "AmCup #3": 27
+            },
+            "1500m": {
+              "AmCup #3": 48
+            }
+          },
+          "totalPoints": 75
+        },
+        "Keith WOBESER": {
+          "name": "Keith WOBESER",
+          "category": "M55",
+          "distances": {
+            "500m": {
+              "AmCup #3": 26
+            }
+          },
+          "totalPoints": 26
+        },
+        "Daniel GREENE": {
+          "name": "Daniel GREENE",
+          "category": "M60",
+          "distances": {
+            "500m": {
+              "AmCup #3": 25
+            },
+            "1500m": {
+              "AmCup #3": 43
+            }
+          },
+          "totalPoints": 68
+        },
+        "Gary GROEN": {
+          "name": "Gary GROEN",
+          "category": "M75",
+          "distances": {
+            "500m": {
+              "AmCup #3": 24
+            },
+            "1500m": {
+              "AmCup #3": 37
+            }
+          },
+          "totalPoints": 61
+        },
+        "David HURST": {
+          "name": "David HURST",
+          "category": "M35",
+          "distances": {
+            "500m": {
+              "AmCup #3": 23
+            },
+            "1500m": {
+              "AmCup #3": 40
+            }
+          },
+          "totalPoints": 63
+        }
+      }
+    },
+    "combinations": {
+      "overall": {
+        "sprint": {
+          "men": [
+            {
+              "name": "Auggie HERMAN",
+              "category": "MN3",
+              "points": 60,
+              "details": {
+                "500m": {
+                  "AmCup #3": 60
+                },
+                "1000m": {}
+              }
+            },
+            {
+              "name": "George WHEELOCK",
+              "category": "MSA",
+              "points": 54,
+              "details": {
+                "500m": {
+                  "AmCup #3": 54
+                },
+                "1000m": {}
+              }
+            },
+            {
+              "name": "Herbert HARBISON",
+              "category": "MSA",
+              "points": 48,
+              "details": {
+                "500m": {
+                  "AmCup #3": 48
+                },
+                "1000m": {}
+              }
+            },
+            {
+              "name": "Zachary JENSEN",
+              "category": "MN2",
+              "points": 43,
+              "details": {
+                "500m": {
+                  "AmCup #3": 43
+                },
+                "1000m": {}
+              }
+            },
+            {
+              "name": "Maison RILEY",
+              "category": "MSA",
+              "points": 40,
+              "details": {
+                "500m": {
+                  "AmCup #3": 40
+                },
+                "1000m": {}
+              }
+            },
+            {
+              "name": "Finn SIEBERT",
+              "category": "MA2",
+              "points": 37,
+              "details": {
+                "500m": {
+                  "AmCup #3": 37
+                },
+                "1000m": {}
+              }
+            },
+            {
+              "name": "William SILK",
+              "category": "MN1",
+              "points": 34,
+              "details": {
+                "500m": {
+                  "AmCup #3": 34
+                },
+                "1000m": {}
+              }
+            },
+            {
+              "name": "David PROVOD",
+              "category": "MB1",
+              "points": 32,
+              "details": {
+                "500m": {
+                  "AmCup #3": 32
+                },
+                "1000m": {}
+              }
+            },
+            {
+              "name": "Matthew SALM",
+              "category": "M30",
+              "points": 30,
+              "details": {
+                "500m": {
+                  "AmCup #3": 30
+                },
+                "1000m": {}
+              }
+            },
+            {
+              "name": "Samuel HART-GORMAN",
+              "category": "MN1",
+              "points": 28,
+              "details": {
+                "500m": {
+                  "AmCup #3": 28
+                },
+                "1000m": {}
+              }
+            },
+            {
+              "name": "Riley MARTIN",
+              "category": "MSA",
+              "points": 27,
+              "details": {
+                "500m": {
+                  "AmCup #3": 27
+                },
+                "1000m": {}
+              }
+            },
+            {
+              "name": "Colin LEE",
+              "category": "MC2",
+              "points": 26,
+              "details": {
+                "500m": {
+                  "AmCup #3": 26
+                },
+                "1000m": {}
+              }
+            },
+            {
+              "name": "Kieran COLLINS",
+              "category": "MB2",
+              "points": 25,
+              "details": {
+                "500m": {
+                  "AmCup #3": 25
+                },
+                "1000m": {}
+              }
+            },
+            {
+              "name": "Anson QUINN",
+              "category": "MA2",
+              "points": 24,
+              "details": {
+                "500m": {
+                  "AmCup #3": 24
+                },
+                "1000m": {}
+              }
+            },
+            {
+              "name": "Michael HUBBS",
+              "category": "M40",
+              "points": 23,
+              "details": {
+                "500m": {
+                  "AmCup #3": 23
+                },
+                "1000m": {}
+              }
+            },
+            {
+              "name": "Kelin DUNFEE",
+              "category": "M35",
+              "points": 22,
+              "details": {
+                "500m": {
+                  "AmCup #3": 22
+                },
+                "1000m": {}
+              }
+            },
+            {
+              "name": "Gavin ORD",
+              "category": "MA2",
+              "points": 21,
+              "details": {
+                "500m": {
+                  "AmCup #3": 21
+                },
+                "1000m": {}
+              }
+            },
+            {
+              "name": "Henry SCHLICHTING",
+              "category": "MB2",
+              "points": 20,
+              "details": {
+                "500m": {
+                  "AmCup #3": 20
+                },
+                "1000m": {}
+              }
+            },
+            {
+              "name": "Edward NAGEL",
+              "category": "MA2",
+              "points": 19,
+              "details": {
+                "500m": {
+                  "AmCup #3": 19
+                },
+                "1000m": {}
+              }
+            },
+            {
+              "name": "Sebastien EPPERSON",
+              "category": "MB1",
+              "points": 18,
+              "details": {
+                "500m": {
+                  "AmCup #3": 18
+                },
+                "1000m": {}
+              }
+            },
+            {
+              "name": "Tariq ELATTAOUI",
+              "category": "MC2",
+              "points": 17,
+              "details": {
+                "500m": {
+                  "AmCup #3": 17
+                },
+                "1000m": {}
+              }
+            },
+            {
+              "name": "Thomas PIERCE",
+              "category": "MSA",
+              "points": 16,
+              "details": {
+                "500m": {
+                  "AmCup #3": 16
+                },
+                "1000m": {}
+              }
+            },
+            {
+              "name": "Matthew KUROWSKI",
+              "category": "MA1",
+              "points": 15,
+              "details": {
+                "500m": {
+                  "AmCup #3": 15
+                },
+                "1000m": {}
+              }
+            },
+            {
+              "name": "Jayden OH",
+              "category": "MB1",
+              "points": 14,
+              "details": {
+                "500m": {
+                  "AmCup #3": 14
+                },
+                "1000m": {}
+              }
+            },
+            {
+              "name": "Roman HASTINGS",
+              "category": "MB1",
+              "points": 13,
+              "details": {
+                "500m": {
+                  "AmCup #3": 13
+                },
+                "1000m": {}
+              }
+            },
+            {
+              "name": "Uel ARCHULETTA",
+              "category": "M55",
+              "points": 12,
+              "details": {
+                "500m": {
+                  "AmCup #3": 12
+                },
+                "1000m": {}
+              }
+            },
+            {
+              "name": "Kevin FEATHERSTONE",
+              "category": "M40",
+              "points": 11,
+              "details": {
+                "500m": {
+                  "AmCup #3": 11
+                },
+                "1000m": {}
+              }
+            },
+            {
+              "name": "Kyle ESSEX",
+              "category": "M30",
+              "points": 10,
+              "details": {
+                "500m": {
+                  "AmCup #3": 10
+                },
+                "1000m": {}
+              }
+            },
+            {
+              "name": "Dawson PRICE",
+              "category": "MSA",
+              "points": 9,
+              "details": {
+                "500m": {
+                  "AmCup #3": 9
+                },
+                "1000m": {}
+              }
+            },
+            {
+              "name": "Nickolas DE BOCK",
+              "category": "MC1",
+              "points": 8,
+              "details": {
+                "500m": {
+                  "AmCup #3": 8
+                },
+                "1000m": {}
+              }
+            },
+            {
+              "name": "Paul GOOD",
+              "category": "M45",
+              "points": 7,
+              "details": {
+                "500m": {
+                  "AmCup #3": 7
+                },
+                "1000m": {}
+              }
+            },
+            {
+              "name": "Jeff TERWILLIGER",
+              "category": "M65",
+              "points": 6,
+              "details": {
+                "500m": {
+                  "AmCup #3": 6
+                },
+                "1000m": {}
+              }
+            },
+            {
+              "name": "Kyler DE GROOT",
+              "category": "MB2",
+              "points": 5,
+              "details": {
+                "500m": {
+                  "AmCup #3": 5
+                },
+                "1000m": {}
+              }
+            },
+            {
+              "name": "Tyler LEE",
+              "category": "M35",
+              "points": 4,
+              "details": {
+                "500m": {
+                  "AmCup #3": 4
+                },
+                "1000m": {}
+              }
+            },
+            {
+              "name": "Matthew TRIMBLE",
+              "category": "M65",
+              "points": 3,
+              "details": {
+                "500m": {
+                  "AmCup #3": 3
+                },
+                "1000m": {}
+              }
+            },
+            {
+              "name": "Joshua KRIETER",
+              "category": "M35",
+              "points": 2,
+              "details": {
+                "500m": {
+                  "AmCup #3": 2
+                },
+                "1000m": {}
+              }
+            },
+            {
+              "name": "Keith WOBESER",
+              "category": "M55",
+              "points": 1,
+              "details": {
+                "500m": {
+                  "AmCup #3": 1
+                },
+                "1000m": {}
+              }
+            },
+            {
+              "name": "Daniel GREENE",
+              "category": "M60",
+              "points": 1,
+              "details": {
+                "500m": {
+                  "AmCup #3": 1
+                },
+                "1000m": {}
+              }
+            },
+            {
+              "name": "Gary GROEN",
+              "category": "M75",
+              "points": 1,
+              "details": {
+                "500m": {
+                  "AmCup #3": 1
+                },
+                "1000m": {}
+              }
+            },
+            {
+              "name": "David HURST",
+              "category": "M35",
+              "points": 1,
+              "details": {
+                "500m": {
+                  "AmCup #3": 1
+                },
+                "1000m": {}
+              }
+            }
+          ],
+          "women": [
+            {
+              "name": "Piper YDE",
+              "category": "LN2",
+              "points": 60,
+              "details": {
+                "500m": {
+                  "AmCup #3": 60
+                },
+                "1000m": {}
+              }
+            },
+            {
+              "name": "Libby WILLIAMS",
+              "category": "LN2",
+              "points": 54,
+              "details": {
+                "500m": {
+                  "AmCup #3": 54
+                },
+                "1000m": {}
+              }
+            },
+            {
+              "name": "Ilsa SHOBE",
+              "category": "LSA",
+              "points": 48,
+              "details": {
+                "500m": {
+                  "AmCup #3": 48
+                },
+                "1000m": {}
+              }
+            },
+            {
+              "name": "Keeley WHITCOMB",
+              "category": "LA1",
+              "points": 43,
+              "details": {
+                "500m": {
+                  "AmCup #3": 43
+                },
+                "1000m": {}
+              }
+            },
+            {
+              "name": "Ana KIMBER",
+              "category": "LSA",
+              "points": 40,
+              "details": {
+                "500m": {
+                  "AmCup #3": 40
+                },
+                "1000m": {}
+              }
+            },
+            {
+              "name": "Evie FORRER",
+              "category": "LB2",
+              "points": 37,
+              "details": {
+                "500m": {
+                  "AmCup #3": 37
+                },
+                "1000m": {}
+              }
+            },
+            {
+              "name": "Aileen OH",
+              "category": "LC2",
+              "points": 34,
+              "details": {
+                "500m": {
+                  "AmCup #3": 34
+                },
+                "1000m": {}
+              }
+            },
+            {
+              "name": "Selena SU",
+              "category": "LA1",
+              "points": 32,
+              "details": {
+                "500m": {
+                  "AmCup #3": 32
+                },
+                "1000m": {}
+              }
+            },
+            {
+              "name": "Allison LA",
+              "category": "LC2",
+              "points": 30,
+              "details": {
+                "500m": {
+                  "AmCup #3": 30
+                },
+                "1000m": {}
+              }
+            },
+            {
+              "name": "Nathalie RODRIGUE-HASSELBACK",
+              "category": "L55",
+              "points": 28,
+              "details": {
+                "500m": {
+                  "AmCup #3": 28
+                },
+                "1000m": {}
+              }
+            },
+            {
+              "name": "Audrey HAN",
+              "category": "LA1",
+              "points": 27,
+              "details": {
+                "500m": {
+                  "AmCup #3": 27
+                },
+                "1000m": {}
+              }
+            },
+            {
+              "name": "Juliette SONG",
+              "category": "LC2",
+              "points": 26,
+              "details": {
+                "500m": {
+                  "AmCup #3": 26
+                },
+                "1000m": {}
+              }
+            },
+            {
+              "name": "Sara CUSHMAN",
+              "category": "L50",
+              "points": 25,
+              "details": {
+                "500m": {
+                  "AmCup #3": 25
+                },
+                "1000m": {}
+              }
+            }
+          ]
+        },
+        "longDistance": {
+          "men": [
+            {
+              "name": "Kyle ESSEX",
+              "category": "M30",
+              "points": 60,
+              "details": {
+                "1500m": {
+                  "AmCup #3": 60
+                },
+                "Mass Start": {},
+                "5000m": {}
+              }
+            },
+            {
+              "name": "Jeff TERWILLIGER",
+              "category": "M65",
+              "points": 54,
+              "details": {
+                "1500m": {
+                  "AmCup #3": 54
+                },
+                "Mass Start": {},
+                "5000m": {}
+              }
+            },
+            {
+              "name": "Joshua KRIETER",
+              "category": "M35",
+              "points": 48,
+              "details": {
+                "1500m": {
+                  "AmCup #3": 48
+                },
+                "Mass Start": {},
+                "5000m": {}
+              }
+            },
+            {
+              "name": "Daniel GREENE",
+              "category": "M60",
+              "points": 43,
+              "details": {
+                "1500m": {
+                  "AmCup #3": 43
+                },
+                "Mass Start": {},
+                "5000m": {}
+              }
+            },
+            {
+              "name": "David HURST",
+              "category": "M35",
+              "points": 40,
+              "details": {
+                "1500m": {
+                  "AmCup #3": 40
+                },
+                "Mass Start": {},
+                "5000m": {}
+              }
+            },
+            {
+              "name": "Gary GROEN",
+              "category": "M75",
+              "points": 37,
+              "details": {
+                "1500m": {
+                  "AmCup #3": 37
+                },
+                "Mass Start": {},
+                "5000m": {}
+              }
+            }
+          ],
+          "women": [
+            {
+              "name": "Piper YDE",
+              "category": "LN2",
+              "points": 60,
+              "details": {
+                "1500m": {
+                  "AmCup #3": 60
+                },
+                "Mass Start": {},
+                "3000m": {}
+              }
+            },
+            {
+              "name": "Ilsa SHOBE",
+              "category": "LSA",
+              "points": 54,
+              "details": {
+                "1500m": {
+                  "AmCup #3": 54
+                },
+                "Mass Start": {},
+                "3000m": {}
+              }
+            },
+            {
+              "name": "Keeley WHITCOMB",
+              "category": "LA1",
+              "points": 48,
+              "details": {
+                "1500m": {
+                  "AmCup #3": 48
+                },
+                "Mass Start": {},
+                "3000m": {}
+              }
+            },
+            {
+              "name": "Ana KIMBER",
+              "category": "LSA",
+              "points": 43,
+              "details": {
+                "1500m": {
+                  "AmCup #3": 43
+                },
+                "Mass Start": {},
+                "3000m": {}
+              }
+            },
+            {
+              "name": "Evie FORRER",
+              "category": "LB2",
+              "points": 40,
+              "details": {
+                "1500m": {
+                  "AmCup #3": 40
+                },
+                "Mass Start": {},
+                "3000m": {}
+              }
+            },
+            {
+              "name": "Selena SU",
+              "category": "LA1",
+              "points": 37,
+              "details": {
+                "1500m": {
+                  "AmCup #3": 37
+                },
+                "Mass Start": {},
+                "3000m": {}
+              }
+            },
+            {
+              "name": "Aileen OH",
+              "category": "LC2",
+              "points": 34,
+              "details": {
+                "1500m": {
+                  "AmCup #3": 34
+                },
+                "Mass Start": {},
+                "3000m": {}
+              }
+            },
+            {
+              "name": "Nathalie RODRIGUE-HASSELBACK",
+              "category": "L55",
+              "points": 32,
+              "details": {
+                "1500m": {
+                  "AmCup #3": 32
+                },
+                "Mass Start": {},
+                "3000m": {}
+              }
+            },
+            {
+              "name": "Audrey HAN",
+              "category": "LA1",
+              "points": 30,
+              "details": {
+                "1500m": {
+                  "AmCup #3": 30
+                },
+                "Mass Start": {},
+                "3000m": {}
+              }
+            },
+            {
+              "name": "Sara CUSHMAN",
+              "category": "L50",
+              "points": 28,
+              "details": {
+                "1500m": {
+                  "AmCup #3": 28
+                },
+                "Mass Start": {},
+                "3000m": {}
+              }
+            },
+            {
+              "name": "Allison LA",
+              "category": "LC2",
+              "points": 27,
+              "details": {
+                "1500m": {
+                  "AmCup #3": 27
+                },
+                "Mass Start": {},
+                "3000m": {}
+              }
+            },
+            {
+              "name": "Juliette SONG",
+              "category": "LC2",
+              "points": 26,
+              "details": {
+                "1500m": {
+                  "AmCup #3": 26
+                },
+                "Mass Start": {},
+                "3000m": {}
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
 }

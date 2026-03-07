@@ -11,8 +11,14 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(cors());
-app.use(express.json());
-app.use(express.static('public'));
+app.use(express.json({ limit: '50mb' }));
+app.use(express.static('public', {
+    setHeaders: (res, filePath) => {
+        if (filePath.endsWith('.js') || filePath.endsWith('.css')) {
+            res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+        }
+    }
+}));
 
 const POINT_SCALE = [
     60, 54, 48, 43, 40, 37, 34, 32, 30, 28,
@@ -26,26 +32,56 @@ const MASTER_AGE_CODES = ['M30', 'M35', 'M40', 'M45', 'M50', 'M55', 'M60', 'M65'
 
 async function scrapeRaceResults(eventId) {
     try {
-        const eventUrl = `https://speedskatingresults.com/index.php?p=2&e=${eventId}`;
-        const eventResponse = await axios.get(eventUrl);
-        const $event = cheerio.load(eventResponse.data);
+        let isLive = false;
+        let fetchEventId = eventId;
+
+        if (typeof eventId === 'string' && eventId.startsWith('LIVE:')) {
+            isLive = true;
+            fetchEventId = eventId.split(':')[1];
+        }
 
         const raceUrls = [];
-        $event('a[href*="p=3"]').each((index, element) => {
-            const href = $event(element).attr('href');
-            if (href && href.includes(`e=${eventId}`) && href.includes('r=')) {
-                const path = href.startsWith('/') ? href.substring(1) : href;
-                const fullUrl = href.startsWith('http') ? href : `https://speedskatingresults.com/${path}`;
-                if (!raceUrls.includes(fullUrl)) {
-                    raceUrls.push(fullUrl);
+
+        if (isLive) {
+            const indexUrl = `https://speedskatingresults.com/live.php?p=1&e=${fetchEventId}`;
+            const indexResponse = await axios.get(indexUrl);
+            const $index = cheerio.load(indexResponse.data);
+
+            $index('a[href*="p=2"]').each((index, element) => {
+                const href = $index(element).attr('href');
+                if (href && href.includes(`e=${fetchEventId}`) && href.includes('r=')) {
+                    if (!href.includes('c=')) {
+                        const fullUrl = `https://speedskatingresults.com/${href}`;
+                        if (!raceUrls.includes(fullUrl)) {
+                            raceUrls.push(fullUrl);
+                        }
+                    }
                 }
-            }
-        });
+            });
+        } else {
+            const eventUrl = `https://speedskatingresults.com/index.php?p=2&e=${fetchEventId}`;
+            const eventResponse = await axios.get(eventUrl);
+            const $event = cheerio.load(eventResponse.data);
+
+            $event('a[href*="p=3"]').each((index, element) => {
+                const href = $event(element).attr('href');
+                if (href && href.includes(`e=${fetchEventId}`) && href.includes('r=')) {
+                    const path = href.startsWith('/') ? href.substring(1) : href;
+                    const fullUrl = href.startsWith('http') ? href : `https://speedskatingresults.com/${path}`;
+                    if (!raceUrls.includes(fullUrl)) {
+                        raceUrls.push(fullUrl);
+                    }
+                }
+            });
+        }
+
+        console.log(`Found ${raceUrls.length} live race URLs to scrape`);
 
         const allResults = [];
 
         for (const raceUrl of raceUrls) {
             try {
+                console.log(`Scraping race: ${raceUrl}`);
                 const raceResponse = await axios.get(raceUrl);
                 const $ = cheerio.load(raceResponse.data);
                 const pageTitle = $('title').text();
@@ -71,16 +107,46 @@ async function scrapeRaceResults(eventId) {
                     gender = 'women';
                 }
 
-                $('table tr').each((index, element) => {
-                    if (index === 0) return;
-                    const cells = $(element).find('td');
-                    if (cells.length < 6) return;
+                let isLivePage = raceUrl.includes('live.php');
+                console.log(`- Page Title: ${pageTitle} | IsLive: ${isLivePage} | Distance: ${distance} | Gender: ${gender}`);
 
-                    const rank = $(cells[0]).text().trim();
-                    const name = $(cells[1]).text().trim();
-                    const category = $(cells[2]).text().trim();
-                    const country = $(cells[4]).text().trim();
-                    const time = $(cells[5]).text().trim();
+                $('table tr').each((index, element) => {
+                    if (index === 0) return; // Header row
+                    const cells = $(element).find('td');
+                    if (cells.length < 5) return;
+
+                    let rank, name, category, country, time;
+
+                    if (isLivePage) {
+                        // Live pages usually have: Rank, Name, Category, [Empty], Country, Time, Notes, Behind
+                        rank = $(cells[0]).text().trim();
+                        name = $(cells[1]).text().trim();
+                        // Sometimes category is missing before race ends, but we determined it's there
+                        category = $(cells[2]).text().trim();
+                        // Find country and time dynamically based on standard 8-col layout
+                        country = $(cells[4]).text().trim();
+                        time = $(cells[5]).text().trim();
+
+                        // Fallbacks if layout shifts (e.g., if there's no empty col 3)
+                        if (country !== 'USA') {
+                            // Search all cells for "USA" just in case columns shifted
+                            cells.each((ci, c) => {
+                                if ($(c).text().trim() === 'USA') {
+                                    country = 'USA';
+                                    time = $(cells[ci + 1]).text().trim();
+                                }
+                            });
+                        }
+                    } else {
+                        // Standard index.php parsing
+                        rank = $(cells[0]).text().trim();
+                        name = $(cells[1]).text().trim();
+                        category = $(cells[2]).text().trim();
+                        country = $(cells[4]).text().trim();
+                        time = $(cells[5]).text().trim();
+                    }
+
+                    if (index < 3) console.log(`  Row ${index}: Rank=${rank}, Name=${name}, Cat=${category}, Country=${country}, Time=${time}`);
 
                     if (country === 'USA' && rank && name && distance) {
                         allResults.push({
@@ -93,7 +159,7 @@ async function scrapeRaceResults(eventId) {
                     }
                 });
             } catch (raceError) {
-                console.error(`Error scraping race ${raceUrl}:`, raceError.message);
+                console.error(`Error scraping race ${raceUrl}:`, raceError);
             }
         }
 
@@ -220,7 +286,8 @@ function processRaceData(raceResults, eventName) {
             result.categories = classifySkater(result.category);
         });
 
-        // OVERALL: All USA skaters ranked together
+        // OVERALL: All USA skaters ranked together (including Masters and Juniors)
+
         sortedResults.forEach((result, index) => {
             const usaRank = index + 1;
             const points = calculatePoints(usaRank, finisherCount, result.status);
@@ -344,16 +411,56 @@ function calculateCombinationStandings(allStandings) {
         }
     });
 
-    combinations.overall.sprint.men.sort((a, b) => b.points - a.points);
-    combinations.overall.sprint.women.sort((a, b) => b.points - a.points);
-    combinations.overall.longDistance.men.sort((a, b) => b.points - a.points);
-    combinations.overall.longDistance.women.sort((a, b) => b.points - a.points);
+    const comboTiebreaker = (a, b) => {
+        if (b.points !== a.points) return b.points - a.points;
+        return tiebreakerCompare(a.details, b.details, true);
+    };
+    combinations.overall.sprint.men.sort(comboTiebreaker);
+    combinations.overall.sprint.women.sort(comboTiebreaker);
+    combinations.overall.longDistance.men.sort(comboTiebreaker);
+    combinations.overall.longDistance.women.sort(comboTiebreaker);
 
     return combinations;
 }
 
 function sumPoints(distanceObj) {
     return Object.values(distanceObj).reduce((sum, pts) => sum + pts, 0);
+}
+
+/**
+ * Tiebreaker comparator: compare two skaters' details event-by-event
+ * from most recent event to oldest. Returns negative if A wins, positive if B wins.
+ */
+function tiebreakerCompare(detailsA, detailsB, isNested = false) {
+    if (isNested) {
+        const allEvents = new Set();
+        [detailsA, detailsB].forEach(details => {
+            if (!details) return;
+            Object.values(details).forEach(distObj => {
+                if (typeof distObj === 'object' && distObj !== null) {
+                    Object.keys(distObj).forEach(ev => allEvents.add(ev));
+                }
+            });
+        });
+        const sortedEvents = [...allEvents].sort().reverse();
+        for (const eventName of sortedEvents) {
+            let sumA = 0, sumB = 0;
+            if (detailsA) Object.values(detailsA).forEach(d => { if (d && d[eventName]) sumA += d[eventName]; });
+            if (detailsB) Object.values(detailsB).forEach(d => { if (d && d[eventName]) sumB += d[eventName]; });
+            if (sumA !== sumB) return sumB - sumA;
+        }
+        return 0;
+    }
+    const allEvents = new Set();
+    if (detailsA) Object.keys(detailsA).forEach(k => allEvents.add(k));
+    if (detailsB) Object.keys(detailsB).forEach(k => allEvents.add(k));
+    const sortedEvents = [...allEvents].sort().reverse();
+    for (const eventName of sortedEvents) {
+        const ptsA = (detailsA && detailsA[eventName]) || 0;
+        const ptsB = (detailsB && detailsB[eventName]) || 0;
+        if (ptsA !== ptsB) return ptsB - ptsA;
+    }
+    return 0;
 }
 
 app.post('/api/scrape-event', async (req, res) => {
@@ -374,6 +481,28 @@ app.post('/api/scrape-event', async (req, res) => {
         res.json({ success: true, eventName, results, standings, combinations });
     } catch (error) {
         console.error('Error in scrape-event:', error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// Process pre-parsed results (used by paste feature)
+app.post('/api/process-results', async (req, res) => {
+    try {
+        const { results, eventName } = req.body;
+        if (!results || !eventName) {
+            return res.status(400).json({ error: 'Results and event name are required' });
+        }
+
+        const standings = processRaceData(results, eventName);
+        const combinations = calculateCombinationStandings({
+            overall: standings.overall,
+            junior: standings.junior,
+            master: standings.master
+        });
+
+        res.json({ success: true, eventName, results, standings, combinations });
+    } catch (error) {
+        console.error('Error processing results:', error);
         res.status(500).json({ error: error.message });
     }
 });
@@ -546,29 +675,30 @@ app.post('/api/generate-pdf', async (req, res) => {
         };
 
         const processCategory = (catName, catKey) => {
-            // Sprint
-            if (type === 'full' || type === 'sprint' || type === 'overall') {
-                const sprint = combinations[catKey].sprint;
-                if (!catKey.includes('over') && (type === 'overall')) return;
+            // Sprint & Long Distance combinations — only for Overall
+            if (catKey === 'overall') {
+                // Sprint
+                if (type === 'full' || type === 'sprint' || type === 'overall') {
+                    const sprint = combinations[catKey].sprint;
 
-                if (sprint.men && sprint.men.length > 0)
-                    generateSection(`${catName} - Sprint (Men)`, sprint.men, false, { type: 'combination' });
-                if (sprint.women && sprint.women.length > 0)
-                    generateSection(`${catName} - Sprint (Women)`, sprint.women, true, { type: 'combination' });
+                    if (sprint.men && sprint.men.length > 0)
+                        generateSection(`${catName} - Sprint (Men)`, sprint.men, false, { type: 'combination' });
+                    if (sprint.women && sprint.women.length > 0)
+                        generateSection(`${catName} - Sprint (Women)`, sprint.women, true, { type: 'combination' });
+                }
+
+                // Long Distance
+                if (type === 'full' || type === 'long-distance' || type === 'overall') {
+                    const ld = combinations[catKey].longDistance;
+
+                    if (ld.men && ld.men.length > 0)
+                        generateSection(`${catName} - Long Distance (Men)`, ld.men, false, { type: 'combination' });
+                    if (ld.women && ld.women.length > 0)
+                        generateSection(`${catName} - Long Distance (Women)`, ld.women, true, { type: 'combination' });
+                }
             }
 
-            // Long Distance
-            if (type === 'full' || type === 'long-distance' || type === 'overall') {
-                const ld = combinations[catKey].longDistance;
-                if (!catKey.includes('over') && (type === 'overall')) return;
-
-                if (ld.men && ld.men.length > 0)
-                    generateSection(`${catName} - Long Distance (Men)`, ld.men, false, { type: 'combination' });
-                if (ld.women && ld.women.length > 0)
-                    generateSection(`${catName} - Long Distance (Women)`, ld.women, true, { type: 'combination' });
-            }
-
-            // Distances
+            // Individual Distances — available for all categories
             if (type === 'full' || (!['sprint', 'long-distance', 'overall'].includes(type))) {
                 const distances = ['500m', '1000m', '1500m', '3000m', '5000m', 'Mass Start'];
                 const catData = standings[catKey];
@@ -582,7 +712,10 @@ app.post('/api/generate-pdf', async (req, res) => {
                         }
                     });
 
-                    skaters.sort((a, b) => b.points - a.points);
+                    skaters.sort((a, b) => {
+                        if (b.points !== a.points) return b.points - a.points;
+                        return tiebreakerCompare(a.distances[dist], b.distances[dist]);
+                    });
 
                     const men = skaters.filter(s => s.category.startsWith('M'));
                     const women = skaters.filter(s => !s.category.startsWith('M'));
